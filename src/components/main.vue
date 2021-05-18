@@ -146,9 +146,9 @@
                     "id":param
                 }
                 //实现异步处理查询操作
-                this.$HttpUtil.get('dept',submitData).then((response)=>{
-                    console.error(response.data[0].ID);
-                    this.TableInfo.TableData.Result = response.data[0].ID;
+                this.$HttpUtil.get('selectOne',submitData).then((response)=>{
+                    console.error(response.data.id);
+                    //this.TableInfo.TableData.Result = response;
                 })
             }
         },
