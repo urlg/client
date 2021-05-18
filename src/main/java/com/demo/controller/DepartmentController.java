@@ -14,6 +14,7 @@ import javax.annotation.Resource;
  */
 @RestController
 @RequestMapping("/")
+@CrossOrigin
 public class DepartmentController {
     /**
      * 服务对象
@@ -29,7 +30,6 @@ public class DepartmentController {
      */
     @GetMapping("selectOne")
     public Department selectOne(Integer id) {
-        System.out.println("id"+id);
         return departmentService.queryById(id);
     }
 
