@@ -1,6 +1,6 @@
-package com.demo.dao;
+package com.demo.module.operationTable.mapper;
 
-import com.demo.entity.Department;
+import com.demo.module.operationTable.entity.Department;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.demo.entity;
+package com.demo.module.operationTable.entity;
 
 import java.io.Serializable;
 

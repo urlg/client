@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.module.selectTable.mapper.AllTableMapper">
+
+    <resultMap id="BaseResultMap" type="com.demo.module.selectTable.entity.AllTable">
+        <!--@Table -->
+        <result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getTableName" resultMap="BaseResultMap">
+        select table_name
+        from information_schema.tables
+        limit #{offset}, #{limit}
+    </select>
+</mapper>

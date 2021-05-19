@@ -1,8 +1,7 @@
-package com.demo.service;
+package com.demo.module.operationTable.service;
 
-import com.demo.entity.Department;
-import com.demo.dao.DepartmentDao;
-import com.demo.service.DepartmentService;
+import com.demo.module.operationTable.entity.Department;
+import com.demo.module.operationTable.mapper.DepartmentDao;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
