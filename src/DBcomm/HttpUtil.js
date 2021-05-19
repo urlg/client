@@ -1,7 +1,7 @@
 var axios = require('axios')
 
 // 配置项目根如路径
-var root = 'http://localhost:8081/'
+var root = 'http://localhost:9090/Table'
 
 // axios请求
 function httpApi (method, url, params) {

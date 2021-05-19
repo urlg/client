@@ -143,12 +143,19 @@
             queryTableData(param){
                 this.TableInfo.isShow = true;
                 let submitData = {
-                    "id":param
+                    "param":param,
+                    "offset":0,
+                    "limit":9
                 }
                 //实现异步处理查询操作
-                this.$HttpUtil.get('selectOne',submitData).then((response)=>{
-                    console.error(response.data.id);
-                    //this.TableInfo.TableData.Result = response;
+                // this.$HttpUtil.get('selectOne',submitData).then((response)=>{
+                //     console.error(response.data.id);
+                //     //this.TableInfo.TableData.Result = response;
+                // })
+
+                //发送post请求
+                this.$HttpUtil.post('SD00001',submitData).then((response)=>{
+                    console.error(response.data);
                 })
             }
         },
