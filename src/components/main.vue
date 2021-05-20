@@ -78,6 +78,7 @@
     import Navigetion from '@/page/box/pullDownBox-Navigetion.vue'
     import  NormalDailog from '@/page/dailog/NormalDailog'
     import  NormalTable from '@/page/box/normalTable.vue'
+    import ObjectKeys from '@/js/getObjectInfo.js'
     export default {
         components:{ Navigetion ,NormalDailog, NormalTable},
         data(){
@@ -88,9 +89,7 @@
                 TableInfo:{
                     isShow:false,
                     title:'查询返回结果',
-                    tHead:[
-                        "ID","department_name","department_age","department_sex","department_address","department_occupation"
-                    ],//表格头
+                    tHead:[],//动态获取表格头
                     TableData: {
                         Result: []
                     },//查询到的表数据
@@ -140,7 +139,7 @@
             /**
              * 查找输入的表名数据
              */
-            queryTableData(param){
+          async  queryTableData(param){
                 this.TableInfo.isShow = true;
                 let submitData = {
                     "param":param,
@@ -148,15 +147,19 @@
                     "limit":9
                 }
                 //实现异步处理查询操作
-                // this.$HttpUtil.get('selectOne',submitData).then((response)=>{
-                //     console.error(response.data.id);
-                //     //this.TableInfo.TableData.Result = response;
-                // })
-
-                //发送post请求
-                this.$HttpUtil.post('SD00001',submitData).then((response)=>{
-                    console.error(response.data);
-                })
+               let result = await this.$Service.send(this,'SD00001',submitData)
+                //循环result对象所有Key
+                this.TableInfo.tHead = []
+                this.TableInfo.tHead = ObjectKeys.getObjectKey(result)
+                let m;
+                for (m=0;m<result.length;m++){
+                    let n
+                    for(n=0;n<this.TableInfo.tHead.length;n++){
+                        console.error('----',result[m].this.TableInfo.tHead[n])
+                        this.TableData.Result.push(result[m].this.TableInfo.tHead[n])
+                    }
+                }
+                console.error('*******',this.TableInfo.tHead)
             }
         },
     }

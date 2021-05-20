@@ -14,8 +14,15 @@ Vue.config.productionTip = false;
 /*
 HttpUtil
  */
-import HttpUtil from "@/DBcomm/HttpUtil";
+import HttpUtil from "@/DBcomm/HttpUtil.js";
 Vue.prototype.$HttpUtil = HttpUtil;
+Vue.config.productionTip = false;
+
+/*
+Http请求封装
+ */
+import Service from "@/DBcomm/Service";
+Vue.prototype.$Service = Service;
 Vue.config.productionTip = false;
 
 // 2. 定义路由
