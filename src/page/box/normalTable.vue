@@ -48,6 +48,10 @@
 
 <style lang="less" scoped>
     .normal-Table{
-        background-color: #d9cebd
+        background-color: #d9cebd;
+        span{
+            padding-left: 140px;
+            font-size: 20px;
+        }
     }
 </style>

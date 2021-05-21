@@ -54,6 +54,11 @@
         border-radius: 2px 2px 2px 2px;
         border-color: black;
         border-width: 2px;
+        .containerDailog-title{
+            span{
+                text-align: center;
+            }
+        }
         .containerDailog-content{
             width: 20%;
         }

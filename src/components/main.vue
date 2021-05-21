@@ -78,7 +78,7 @@
     import Navigetion from '@/page/box/pullDownBox-Navigetion.vue'
     import  NormalDailog from '@/page/dailog/NormalDailog'
     import  NormalTable from '@/page/box/normalTable.vue'
-    import ObjectKeys from '@/js/getObjectInfo.js'
+    import ObjectInfo from '@/js/getObjectInfo.js'
     export default {
         components:{ Navigetion ,NormalDailog, NormalTable},
         data(){
@@ -88,7 +88,7 @@
                 //表格信息
                 TableInfo:{
                     isShow:false,
-                    title:'查询返回结果',
+                    title:'结果',
                     tHead:[],//动态获取表格头
                     TableData: {
                         Result: []
@@ -150,16 +150,11 @@
                let result = await this.$Service.send(this,'SD00001',submitData)
                 //循环result对象所有Key
                 this.TableInfo.tHead = []
-                this.TableInfo.tHead = ObjectKeys.getObjectKey(result)
-                let m;
-                for (m=0;m<result.length;m++){
-                    let n
-                    for(n=0;n<this.TableInfo.tHead.length;n++){
-                        console.error('----',result[m].this.TableInfo.tHead[n])
-                        this.TableData.Result.push(result[m].this.TableInfo.tHead[n])
-                    }
-                }
-                console.error('*******',this.TableInfo.tHead)
+                this.TableInfo.TableData.Result = []
+                this.TableInfo.tHead = ObjectInfo.getObjectKeys(result)
+                this.TableInfo.TableData.Result = ObjectInfo.getObjectValues(ObjectInfo.getObjectKeys(result),result)
+                console.error('tHead',this.TableInfo.tHead)
+                console.error('Result',this.TableInfo.TableData.Result)
             }
         },
     }
@@ -216,7 +211,10 @@
         }
         //中间区域
         .container-main-middle{
+            width: 100%;
                 .container-main-queryTable{
+                    margin-left: 10%;
+                    margin-top:30%;
                     .queryTable-data{
                         display: flex;
                         flex-direction: row;
