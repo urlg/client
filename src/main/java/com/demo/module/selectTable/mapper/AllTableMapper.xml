@@ -5,10 +5,14 @@
     <resultMap id="BaseResultMap" type="com.demo.module.selectTable.entity.AllTable">
         <!--@Table -->
         <result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR"/>
+        <result property="tableType" column="TABLE_TYPE" jdbcType="VARCHAR"/>
+        <result property="tableRows" column="TABLE_ROWS" jdbcType="INTEGER"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
     <select id="getTableName" resultMap="BaseResultMap">
-        select table_name
-        from information_schema.tables
+        select TABLE_NAME ,TABLE_TYPE, TABLE_ROWS ,CREATE_TIME
+         from  information_schema.tables
+         where TABLE_SCHEMA ='MYSQL'
         limit #{offset}, #{limit}
     </select>
 </mapper>

@@ -16,4 +16,9 @@ mybatis:
 server:
   port: 9090
 
+#打印sql
+logging:
+  level:
+    com.demo.module : debug
+
 
