@@ -22,6 +22,7 @@ public class AllTableInfo {
      */
     @PostMapping("SD00001")
     ArrayList<AllTable> getTableName(@RequestBody RequestAllTableParam param){
+        System.out.println("controller");
         return  allTableService.getTableName(param.getOffset(),param.getLimit());
     }
 }
