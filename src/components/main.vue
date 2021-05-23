@@ -139,10 +139,9 @@
             /**
              * 查找输入的表名数据
              */
-          async  queryTableData(param){
+          async  queryTableData(){
                 this.TableInfo.isShow = true;
                 let submitData = {
-                    "param":param,
                     "offset":0,
                     "limit":9
                 }
