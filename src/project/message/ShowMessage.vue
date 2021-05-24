@@ -3,7 +3,9 @@
         <span>
             {{Message}}
         </span>
-        <button @click="removeElement()">我知道了</button>
+        <div class="Buttom">
+            <button class="ShowMessage-Buttom" v-for="(item,key) in Options" :key="item" @click="Confirm(key)">{{item}}</button>
+        </div>
     </div>
 </template>
 
@@ -18,11 +20,14 @@
             IsShow:{
                 type: Boolean,
                 default: false
+            },
+            Options:{
+                type:Array,
+                default:()=>([])
             }
         },
         data(){
             return{
-                message:'',
                 hideFn:''
             }
         },
@@ -35,6 +40,14 @@
             removeElement(){
                 this.$destroy();
                 document.querySelector('.ShowMessage').remove()
+            },
+            /**
+             * 当点击的时候
+             */
+            Confirm(key){
+                if(this.hideFn && typeof this.hideFn =='function'){
+                    this.hideFn(key)
+                }
             }
         }
     }
@@ -55,8 +68,11 @@
         border-radius: 2px 2px 2px 2px;
         border-color: black;
         border-width: 2px;
-        .button{
-
+        .ShowMessage-Buttom{
+            button{
+                display: flex;
+                flex-direction: row;
+            }
         }
     }
 </style>

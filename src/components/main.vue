@@ -116,8 +116,13 @@
             changNavigationStyle(num,$event){
                 //$showMessage
                 this.$showMessage({
-                    Message: '客户信息查找失败，请重新测试',
-                    IsShow:true
+                    Message: '客户信息查找失败，请重新输入信息',
+                    IsShow:true,
+                    Options:["确定","取消"],
+                    hideFn:(result)=>{
+                        //这里是一个回调函数
+                        console.error("result",result)
+                    },
                 })
                 //this.isShow =true;
                 this.Active = num;

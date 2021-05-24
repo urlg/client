@@ -1,3 +1,8 @@
+
+<!--
+@ author :A-8626  沙建斌
+@ description :普通带有标题的表格
+-->
 <template>
     <div class="normal-Table" v-show="isShow">
         <span>{{title}}</span>
