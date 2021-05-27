@@ -16,7 +16,7 @@ public class R_StreamContent {
 
 
     /**
-     * 读取HttpRequest 对象中内容
+     * 读取HttpRequest body中内容
      */
 
     public  String readHttpRequestContent(HttpServletRequest request) throws Exception{

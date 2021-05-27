@@ -34,9 +34,10 @@ public class requestAndresponseInterseptor  implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-       // log.info("PreHandlerrequest------"+ Arrays.toString(request.getParameterMap().get("offset")));
         String string = new R_StreamContent().readHttpRequestContent(request);
         System.out.println(string);
+        JSONObject jsonObject = new JSONObject(string);
+        System.out.println("date:"+jsonObject.getString("date"));
         return true;
     }
 
