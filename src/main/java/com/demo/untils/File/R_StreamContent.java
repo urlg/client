@@ -1,17 +1,18 @@
 package com.demo.untils.File;
 
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * @author  A-8626 沙建斌  2021-05-24-23:21
  * @discription: 读取流Stream中的内容
  * @version  1.0
  */
+@Component(value = "readStreamContent")
 public class R_StreamContent {
 
 
@@ -59,5 +60,59 @@ public class R_StreamContent {
                     }
                 requestBody = stringBuilder.toString();
         return requestBody;
+    }
+
+    /**
+     * @author A-8626 沙建斌
+     * @description 读取字符类型的文件 例如: .txt .xml .xsl
+     * @param filePath 文件路径
+     * @return content {@link java.lang.String}
+     */
+
+    public String readFileContent(String filePath){
+        String content = "";
+        StringBuilder stringBuilder = new StringBuilder();
+        FileReader fileReader =null;
+        BufferedReader bufferedReader = null;
+
+        /**根据filePath创建File对象**/
+        File file = new File(filePath);
+            if(file.isDirectory()) {
+                //这里需要报错是目录非文件
+            }
+
+            if(!file.exists()){
+                //这里文件不存在
+            }
+
+            try {
+
+                bufferedReader = new BufferedReader(new FileReader(filePath),298);
+                String result = "";
+                while ((result=bufferedReader.readLine()) !=null){
+                    stringBuilder.append(result);
+                }
+            }catch (Exception e){
+                //这里抛出异常
+            }finally {
+                //关闭流
+                if(fileReader!=null){
+                    try{
+                        fileReader.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+
+                if(bufferedReader != null){
+                    try{
+                        bufferedReader.close();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            content = stringBuilder.toString();
+        return  content;
     }
 }

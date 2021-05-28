@@ -3,9 +3,11 @@ package com.demo.config.Interceptor;
 import com.demo.untils.File.R_StreamContent;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -32,12 +34,16 @@ public class requestAndresponseInterseptor  implements HandlerInterceptor {
      * @return
      * @throws Exception
      */
+    @Autowired
+    private R_StreamContent readStreamContent;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        String string = new R_StreamContent().readHttpRequestContent(request);
-        System.out.println(string);
-        JSONObject jsonObject = new JSONObject(string);
-        System.out.println("date:"+jsonObject.getString("date"));
+        //String string = new R_StreamContent().readHttpRequestContent(request);
+        System.out.println("result"+readStreamContent);
+        //readStreamContent.readFileContent("d:server_log.txt");
+        //System.out.println(string);
+        //JSONObject jsonObject = new JSONObject(string);
+        //System.out.println("date:"+jsonObject.getString("date"));
         return true;
     }
 
