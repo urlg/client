@@ -1,6 +1,7 @@
 package com.demo.untils.File;
 
 
+import com.demo.untils.Exception.GlobalException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
@@ -69,7 +70,7 @@ public class R_StreamContent {
      * @return content {@link java.lang.String}
      */
 
-    public String readFileContent(String filePath){
+    public String readFileContent(String filePath) throws GlobalException {
         String content = "";
         StringBuilder stringBuilder = new StringBuilder();
         FileReader fileReader =null;
@@ -78,7 +79,8 @@ public class R_StreamContent {
         /**根据filePath创建File对象**/
         File file = new File(filePath);
             if(file.isDirectory()) {
-                //这里需要报错是目录非文件
+                System.out.println("00000S"+new GlobalException("00001","是目录不是文件").getErrorMsg());
+                throw new GlobalException("00001","是目录不是文件");
             }
 
             if(!file.exists()){

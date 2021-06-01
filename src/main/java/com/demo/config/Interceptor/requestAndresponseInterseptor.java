@@ -34,12 +34,9 @@ public class requestAndresponseInterseptor  implements HandlerInterceptor {
      * @return
      * @throws Exception
      */
-    @Autowired
-    private R_StreamContent readStreamContent;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         //String string = new R_StreamContent().readHttpRequestContent(request);
-        System.out.println("result"+readStreamContent);
         //readStreamContent.readFileContent("d:server_log.txt");
         //System.out.println(string);
         //JSONObject jsonObject = new JSONObject(string);
