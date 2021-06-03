@@ -1,18 +1,18 @@
 package com.demo.module.selectTable.controller;
 
+import com.demo.message.Response;
 import com.demo.module.selectTable.entity.AllTable;
 import com.demo.module.selectTable.entity.RequestAllTableParam;
 import com.demo.module.selectTable.sevice.AllTableService;
-import com.demo.untils.Exception.GlobalException;
+import com.demo.message.GlobalException;
 import com.demo.untils.File.R_StreamContent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.List;
 
-@RequestMapping("Table")
+@RequestMapping(value = "Table",method = RequestMethod.POST ,produces="application/json")
 @RestController
 @CrossOrigin
 public class AllTableInfo {
@@ -26,9 +26,10 @@ public class AllTableInfo {
      * @return
      */
     @PostMapping("SD00001")
-    ArrayList<AllTable> getTableName(@RequestBody RequestAllTableParam param) throws GlobalException {
-        String s = readStreamContent.readFileContent("d:/db");
+    public Response getTableName(@RequestBody RequestAllTableParam param){
+        String s = readStreamContent.readFileContent("d:/db.txt");
         //System.out.println("controller"+s);
-        return  allTableService.getTableName(param.getOffset(),param.getLimit());
+
+        return  new Response(allTableService.getTableName(param.getOffset(),param.getLimit()));
     }
 }
