@@ -2,6 +2,7 @@ package com.demo.message;
 
 /**
  * @author 沙建斌  A-8626 2021-06-01 全局异常捕获类
+ *          所有运行时异常都在这里进行捕获
  */
 public class GlobalException extends  RuntimeException{
 

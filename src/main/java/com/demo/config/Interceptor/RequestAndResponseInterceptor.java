@@ -1,19 +1,11 @@
 package com.demo.config.Interceptor;
 
-import com.demo.untils.File.R_StreamContent;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author  A-8626 沙建斌
@@ -24,10 +16,10 @@ import java.util.Set;
  * @preHandle :请求进入controller之
  */
 @Slf4j
-public class requestAndresponseInterseptor  implements HandlerInterceptor {
+public class RequestAndResponseInterceptor implements HandlerInterceptor {
 
     /**
-     * @descraption  可以在这里进行字段检查【必输非必输之类】 【登录信息等】
+     * @descraption  可以在这里进行字段检查【必输非必输之类】
      * @param request
      * @param response
      * @param handler

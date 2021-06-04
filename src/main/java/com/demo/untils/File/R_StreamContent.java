@@ -4,6 +4,7 @@ package com.demo.untils.File;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -21,7 +22,7 @@ public class R_StreamContent {
      * 读取HttpRequest body中内容
      */
 
-    public  String readHttpRequestContent(HttpServletRequest request) throws Exception{
+    public  String readHttpRequestContent(HttpServletRequest request){
         String requestBody = "";
         StringBuilder stringBuilder = new StringBuilder();
         InputStream inputStream =null;
@@ -69,7 +70,6 @@ public class R_StreamContent {
      * @param filePath 文件路径
      * @return content {@link java.lang.String}
      */
-
     public String readFileContent(String filePath) throws GlobalException {
         String content = "";
         StringBuilder stringBuilder = new StringBuilder();
@@ -79,7 +79,7 @@ public class R_StreamContent {
         /**根据filePath创建File对象**/
         File file = new File(filePath);
             if(file.isDirectory()) {
-                System.out.println("GlobalException"+new GlobalException(ErrorCodeAndMsg.IS_DIRECTORY));
+                System.out.println("ErrorCodeAndMsg:"+ErrorCodeAndMsg.IS_DIRECTORY);
                 throw new GlobalException(ErrorCodeAndMsg.IS_DIRECTORY);
             }
 

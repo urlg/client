@@ -12,6 +12,15 @@ public enum ErrorCodeAndMsg {
     private String code;
     private String msg;
 
+    ErrorCodeAndMsg(){
+
+    }
+
+    /**
+     * 这块地构造方法有点没有理解
+     * @param code
+     * @param msg
+     */
     ErrorCodeAndMsg(String code,String msg){
         this.code = code;
         this.msg  = msg;

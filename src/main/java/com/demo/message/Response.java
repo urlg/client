@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * @author A-8626 沙建斌 20200603
  * @description 请求返回类
+ *              所有返回数据在这个类中进行包装然后返回
  */
 
 public class Response<T> implements Serializable {
@@ -14,7 +15,7 @@ public class Response<T> implements Serializable {
     private static final String successCode="000000";
 
     /**返回数据**/
-    private  T data;
+    private  T body;
 
     /**返回码**/
     private  String code;
@@ -34,25 +35,25 @@ public class Response<T> implements Serializable {
         this.msg    = msg;
     }
 
-    public Response(String code,String msg,T data){
+    public Response(String code,String msg,T body){
         this();
         this.code  = code;
         this.msg   = msg;
-        this.data  = data;
+        this.body = body;
     }
 
-    public Response(T data){
+    public Response(T body){
         this();
-        this.data =data;
+        this.body = body;
     }
 
 
-    public T getData() {
-        return data;
+    public T getBody() {
+        return body;
     }
 
-    public void setData(T data) {
-        this.data = data;
+    public void setBody(T body) {
+        this.body = body;
     }
 
     public String getCode() {

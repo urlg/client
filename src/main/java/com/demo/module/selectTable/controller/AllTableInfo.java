@@ -26,10 +26,11 @@ public class AllTableInfo {
      * @return
      */
     @PostMapping("SD00001")
-    public Response getTableName(@RequestBody RequestAllTableParam param){
-        String s = readStreamContent.readFileContent("d:/db.txt");
-        //System.out.println("controller"+s);
+    public Response getTableName(@RequestBody(required = false) String param){
+        String s = readStreamContent.readFileContent("d:/db");
+        System.out.println("controller"+s);
 
-        return  new Response(allTableService.getTableName(param.getOffset(),param.getLimit()));
+        //return  new Response(allTableService.getTableName(param.getOffset(),param.getLimit()));
+        return  new Response(allTableService.getTableName(0,9));
     }
 }
