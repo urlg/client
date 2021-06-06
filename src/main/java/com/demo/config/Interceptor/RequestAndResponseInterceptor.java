@@ -1,11 +1,13 @@
 package com.demo.config.Interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * @author  A-8626 沙建斌
@@ -33,6 +35,24 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
         //System.out.println(string);
         //JSONObject jsonObject = new JSONObject(string);
         //System.out.println("date:"+jsonObject.getString("date"));
+//        log.info("RequestURL"+request.getRequestURL());
+//        log.info("CharacterEncoding"+request.getCharacterEncoding());
+//        log.info("ContextPath"+request.getContextPath());
+//        log.info("ContentType"+request.getContentType());
+//        log.info("ContentLength"+request.getContentLength());
+//        log.info("RemoteUser"+request.getRemoteUser());
+//        log.info("RemoteHost"+request.getRemoteHost());
+//        log.info("ServerPort"+request.getServerPort());
+//        log.info("LocalAddr()"+request.getLocalAddr());
+//        log.info("LocalName"+request.getLocalName());
+//        log.info("LocalPort"+request.getLocalPort());
+//        log.info("PathInfo"+request.getPathInfo());
+        request.getHeaderNames();
+        Enumeration<String> HeaderNames = request.getHeaderNames();
+        while (HeaderNames.hasMoreElements()){
+            log.error(HeaderNames.nextElement());
+        }
+
         return true;
     }
 
