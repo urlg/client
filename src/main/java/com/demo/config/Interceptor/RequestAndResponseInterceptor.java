@@ -1,6 +1,9 @@
 package com.demo.config.Interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +21,8 @@ import java.util.Enumeration;
  * @preHandle :请求进入controller之
  */
 @Slf4j
+@Component(value = "requestAndResponseInterceptor")
+@Order(1)
 public class RequestAndResponseInterceptor implements HandlerInterceptor {
 
     /**
@@ -52,17 +57,17 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
         while (HeaderNames.hasMoreElements()){
             log.error(HeaderNames.nextElement());
         }
-
+            log.error("InterceptorHandler");
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        System.out.println("postHandle");
+            log.error("postHandle");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        System.out.println("afterCompletion");
+            log.error("afterCompletion");
     }
 }
