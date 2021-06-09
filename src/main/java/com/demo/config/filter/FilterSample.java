@@ -7,8 +7,8 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 @Slf4j
-@WebFilter
-@Component
+//@WebFilter
+//@Component
 public class FilterSample implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

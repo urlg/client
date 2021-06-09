@@ -30,7 +30,8 @@ public class TestAspect {
      * Before   Advice
      */
 
-    @Before("execution(public * com.demo.module.selectTable.controller.AllTableInfo.getTableName(..))")
+    @Before("this(com.demo.module.selectTable.controller.AllTableInfo)")
+    //@Pointcut("this(com.demo.module.selectTable.controller.AllTableInfo)")
     public void aspectBefore(){
         log.error("Advice Before");
     }

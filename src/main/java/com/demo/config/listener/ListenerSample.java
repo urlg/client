@@ -10,8 +10,8 @@ import javax.servlet.annotation.WebListener;
 /**
  * @decriptiion 监听器有很多中类比,这里只是选择一个ServletRequestListener
  */
-@WebListener
-@Component
+//@WebListener
+//@Component
 @Slf4j
 public class ListenerSample implements ServletRequestListener {
     @Override
