@@ -65,7 +65,7 @@ public class TestAspect {
          * 此时request就是被增强的方法返回值
          */
         Response response = (Response) result;
-        log.error("result"+response.getMsg()+response.getBody());
+        //log.error("result"+response.getMsg()+response.getBody());
         log.error("after around advice");
         return result;
     }
