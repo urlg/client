@@ -21,7 +21,6 @@ public class ExcptionHandler {
     public Response handelerGlobalException(HttpServletRequest request,GlobalException ex){
         Response response;
         response = new Response(ex.getResponse().getCode(),ex.getResponse().getMsg());
-        System.out.println("ExceptionHandler");
         return response;
     }
 
@@ -35,7 +34,6 @@ public class ExcptionHandler {
     @ResponseBody
     public Response handlerException(HttpServletRequest request,Exception exception){
         Response response;
-        System.out.println("Exception");
         response = new Response(ErrorCodeAndMsg.NETWORK_ERROR.getCode(),ErrorCodeAndMsg.NETWORK_ERROR.getMsg());
         return response;
     }

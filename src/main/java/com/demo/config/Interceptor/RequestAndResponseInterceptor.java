@@ -1,5 +1,6 @@
 package com.demo.config.Interceptor;
 
+import com.demo.module.selectTable.entity.AllTable;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -52,23 +53,24 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
 //        log.info("LocalPort"+request.getLocalPort());
 //        log.info("PathInfo"+request.getPathInfo());
         request.getHeaderNames();
+        System.out.println(request.getAttribute("setAtribute"));
         Enumeration<String> HeaderNames = request.getHeaderNames();
         while (HeaderNames.hasMoreElements()){
             log.error(HeaderNames.nextElement());
         }
-            log.error("InterceptorHandler");
+        response.addHeader("name","value");
         return true;
     }
 
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        Cookie  cookies = new Cookie("key","ctre");
-        response.addCookie(cookies);
         log.error("postHandle");
+
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-            log.error("afterCompletion");
+        log.error("afterCompletion");
     }
 }

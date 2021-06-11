@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 @Slf4j
@@ -67,6 +68,7 @@ public class FilterSample implements Filter {
             log.error("Accept-Encoding:"+httpServletRequest.getHeader("Accept-Encoding"));
             log.error("Connection:"+httpServletRequest.getHeader("Connection"));
 
+            httpServletRequest.setAttribute("setAtribute","Atribute");
             //获取Cookie
         Cookie [] cookie = ((HttpServletRequest) request).getCookies();
             if(cookie != null) {
@@ -77,10 +79,28 @@ public class FilterSample implements Filter {
 
             chain.doFilter(request,response);
 
+            /**
+             * 如果是最后一个Filter这里可以设置responseHeader信息
+             * **/
+        //ResponseHeaderInfo responseHeaderInfo = new ResponseHeaderInfo();
+        System.out.println("name"+((HttpServletResponse) response).getHeader("name"));
+        System.out.println("Date"+((HttpServletResponse) response).getHeader("Date"));
+        System.out.println("FilterChain");
     }
+
 
     @Override
     public void destroy() {
             log.error("destroy");
     }
+
+    /**
+     * 设置HttpServletResponse头信息
+     * **/
+    static class ResponseHeaderInfo{
+            static void  setResponseHeader(HttpServletRequest request, HttpServletResponse response){
+                response.addHeader("header","header");
+            }
+    }
 }
+

@@ -29,22 +29,8 @@ public class AllTableInfo {
      */
     @PostMapping("SD00001")
     public Response getTableName(
-            @RequestBody(required = false) String param,
-            @RequestHeader("User-Agent") String User,
-            HttpServletRequest request
+            @RequestBody(required = false) String param
     ){
-        //String s = readStreamContent.readFileContent("d:/db");
-        Enumeration<String> HeaderNames = request.getHeaderNames();
-        while (HeaderNames.hasMoreElements()){
-            System.out.println(HeaderNames.nextElement()+":");
-            //System.out.println(request.getHeaders(HeaderNames.nextElement()));
-            Enumeration<String> Headers = request.getHeaders(HeaderNames.nextElement());
-                while (Headers.hasMoreElements()){
-                    System.out.println("Headers:"+Headers.nextElement());
-                }
-        }
-
-        //return  new Response(allTableService.getTableName(param.getOffset(),param.getLimit()));
         return  new Response(allTableService.getTableName(0,9));
     }
 }
