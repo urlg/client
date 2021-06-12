@@ -59,6 +59,13 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
             log.error(HeaderNames.nextElement());
         }
         response.addHeader("name","value");
+        Cookie cookie = new Cookie("cookie","value");
+        cookie.setHttpOnly(true);
+        cookie.setComment("serComment");
+        /**设置Cookie失效时间**/
+        cookie.setMaxAge(60);
+        //cookie.setSecure(true);
+        response.addCookie(cookie);
         return true;
     }
 

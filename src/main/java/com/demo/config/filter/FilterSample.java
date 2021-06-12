@@ -77,15 +77,9 @@ public class FilterSample implements Filter {
                 }
             }
 
+
             chain.doFilter(request,response);
 
-            /**
-             * 如果是最后一个Filter这里可以设置responseHeader信息
-             * **/
-        //ResponseHeaderInfo responseHeaderInfo = new ResponseHeaderInfo();
-        System.out.println("name"+((HttpServletResponse) response).getHeader("name"));
-        System.out.println("Date"+((HttpServletResponse) response).getHeader("Date"));
-        System.out.println("FilterChain");
     }
 
 
