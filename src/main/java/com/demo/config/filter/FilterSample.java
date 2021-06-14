@@ -1,8 +1,6 @@
 package com.demo.config.filter;
 
 import com.demo.config.redis.RedisUtil;
-import com.demo.message.ErrorCodeAndMsg;
-import com.demo.message.GlobalException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +10,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 @Slf4j
 @WebFilter
@@ -86,18 +83,17 @@ public class FilterSample implements Filter {
             }
 
             /**
-             * redis缓存+验证token
-             * 1：在redist缓存中检查是否有token
-             *      1.1：redis缓存中有token的话检查token是否过期
-             *      1.2：token未过期的话继续下一个Filter
-             *      1.3: token过期则返回错误信息让重新登录
-             * 2：redis中无token的话则让重新登录
+             * redis缓存+token验证是否需要重新登录
+             *  首先检查客户端请求头是否带有Token,客户端请求头不带token则直接进行用户身份验证并且生成token且放置到redis缓存和返回请求体中
+             *  客户端请求头带有token,查询redis是否具有token缓存,redis中无token缓存(可能token失效或者无token此时处理方式都是认为token有问题重新登录获取token)
+             *  redis缓存中有token则进行token验证(验证的是客户端传递过来的token是否和redis缓存中的token一致),token一致则进行下一个filter且不进行重新登录
+             *  redis缓存中的token和客户端传递过来的token不一致,认为token有问题则进行重新登录权限验证重新生成token
+             *
+             * redis缓存中token时效性
+             *      Filter中应该是每次都验证Token的正确性,Token验证成功了须刷新Token有效期
              * **/
             String token = httpServletRequest.getHeader("Postman-Token");//用来验证Token是否正确
-            log.error("Postman-Token:"+redisUtil.get("Postman-Token"));
             if(redisUtil.get("Postman-Token") !=  "" || redisUtil.get("Postman-Token") != null){
-                log.error("当前请求头有token");
-                log.error("Token过期时间："+redisUtil.getExpire("Postman-Token"));
                 if(redisUtil.getExpire("Postman-Token")>6000){
                     log.error("Postman-Token");
                     //这里应该是抛出异常信息
@@ -109,13 +105,11 @@ public class FilterSample implements Filter {
                 chain.doFilter(request,response);
             }
         /**
-         * redis无token则进行登录验证,验证成功后生成一个token并放在请求头
+         * redis无token则进行登录验证,验证成功后生成一个token并设置到返回体中
         */
         if(redisUtil.get("Postman-Token") == "" ||redisUtil.get("Postman-Token") == null){
-            log.error("没有找到token");
-            log.error("setToken:"+redisUtil.set("Postman-Token","abscdesfajlfajfljdfl",10));
             httpServletResponse.setHeader("Postman-Token","abscdesfajlfajfljdfl");
-            //chain.doFilter(request,response);
+            chain.doFilter(request,response);
         }
 
     }
