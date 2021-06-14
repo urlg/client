@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("operation")
-@CrossOrigin
+//@CrossOrigin
 public class DepartmentController {
     /**
      * 服务对象

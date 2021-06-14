@@ -10,7 +10,7 @@ import org.springframework.web.filter.CorsFilter;
  * 配置全局跨域
  * @create 2021-05-18
  */
-//@Configuration
+@Configuration
 public class CrossOriginConfig {
 
     /**

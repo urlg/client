@@ -1,8 +1,10 @@
 package com.demo.config.filter;
 
+import com.demo.config.redis.RedisUtil;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -16,6 +18,12 @@ import java.io.IOException;
 @WebFilter
 @Component
 public class FilterSample implements Filter {
+    /**
+     * 注入Redis的工具类
+     * **/
+    @Autowired
+    private  RedisUtil redisUtil;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
             log.error("FilterInit");
@@ -28,7 +36,6 @@ public class FilterSample implements Filter {
          *  {@param ServletRequest request}  --interface
          *  1:ServletRequest对象作用
          * **/
-
         //获取当前协议类型   example:HTTP/1.1
         log.error(request.getProtocol());
         //获取当前字符编码格式 example:utf-8
@@ -49,7 +56,8 @@ public class FilterSample implements Filter {
          *                            HttpServletRequest接口继承了ServletRequest接口,因此HttpServletRequest具有ServletRequest所有方法
          * 1:主要是可以将ServletRequest对像转换为HttpServletRequest对象,而HttpServletRequest对象可以进行多样操作
          * **/
-        HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+        HttpServletRequest   httpServletRequest  = (HttpServletRequest)request;
+        HttpServletResponse  httpServletResponse = (HttpServletResponse)response;
 
             //获取当前请求方法
             log.error("Method:"+httpServletRequest.getMethod());
@@ -77,8 +85,38 @@ public class FilterSample implements Filter {
                 }
             }
 
+            /**
+             * redis缓存+验证token
+             * 1：在redist缓存中检查是否有token
+             *      1.1：redis缓存中有token的话检查token是否过期
+             *      1.2：token未过期的话继续下一个Filter
+             *      1.3: token过期则返回错误信息让重新登录
+             * 2：redis中无token的话则让重新登录
+             * **/
+            String token = httpServletRequest.getHeader("Postman-Token");//用来验证Token是否正确
+            log.error("Postman-Token:"+redisUtil.get("Postman-Token"));
+            if(redisUtil.get("Postman-Token") !=  "" || redisUtil.get("Postman-Token") != null){
+                log.error("当前请求头有token");
+                log.error("Token过期时间："+redisUtil.getExpire("Postman-Token"));
+                if(redisUtil.getExpire("Postman-Token")>6000){
+                    log.error("Postman-Token");
+                    //这里应该是抛出异常信息
+                }
 
-            chain.doFilter(request,response);
+                /***
+                 * 这里进行token的验证,验证成功继续下一个Filter失败给出错误信息重新登录
+                 * */
+                chain.doFilter(request,response);
+            }
+        /**
+         * redis无token则进行登录验证,验证成功后生成一个token并放在请求头
+        */
+        if(redisUtil.get("Postman-Token") == "" ||redisUtil.get("Postman-Token") == null){
+            log.error("没有找到token");
+            log.error("setToken:"+redisUtil.set("Postman-Token","abscdesfajlfajfljdfl",10));
+            httpServletResponse.setHeader("Postman-Token","abscdesfajlfajfljdfl");
+            //chain.doFilter(request,response);
+        }
 
     }
 
@@ -86,15 +124,6 @@ public class FilterSample implements Filter {
     @Override
     public void destroy() {
             log.error("destroy");
-    }
-
-    /**
-     * 设置HttpServletResponse头信息
-     * **/
-    static class ResponseHeaderInfo{
-            static void  setResponseHeader(HttpServletRequest request, HttpServletResponse response){
-                response.addHeader("header","header");
-            }
     }
 }
 
