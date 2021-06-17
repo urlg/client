@@ -7,7 +7,8 @@ package com.demo.message;
 public enum ErrorCodeAndMsg {
     FILE_NOT_FIND("FNF001","文件未找到"),
     IS_DIRECTORY("ISD001","是目录非文件"),
-    NETWORK_ERROR("9999","网路连接异常");
+    NETWORK_ERROR("9999","网路连接异常"),
+    IS_NULL_RECORD("ISN001","查询无记录");
 
     private String code;
     private String msg;

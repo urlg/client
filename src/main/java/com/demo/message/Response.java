@@ -1,5 +1,8 @@
 package com.demo.message;
 
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.io.Serializable;
 
 /**
@@ -7,7 +10,6 @@ import java.io.Serializable;
  * @description 请求返回类
  *              所有返回数据在这个类中进行包装然后返回
  */
-
 public class Response<T> implements Serializable {
     private static final long serialVersionUID = -4505655309658789999L;
 

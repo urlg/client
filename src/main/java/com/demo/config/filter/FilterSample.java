@@ -1,6 +1,8 @@
 package com.demo.config.filter;
 
 import com.demo.config.redis.RedisUtil;
+import com.demo.untils.File.R_StreamContent;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,11 +23,15 @@ public class FilterSample implements Filter {
     @Autowired
     private  RedisUtil redisUtil;
 
+    @Autowired
+    private R_StreamContent StreamContent;
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
             log.error("FilterInit");
     }
 
+    @SneakyThrows
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
@@ -55,7 +61,7 @@ public class FilterSample implements Filter {
          * **/
         HttpServletRequest   httpServletRequest  = (HttpServletRequest)request;
         HttpServletResponse  httpServletResponse = (HttpServletResponse)response;
-
+            StreamContent.httpRequestBody(httpServletRequest);
             //获取当前请求方法
             log.error("Method:"+httpServletRequest.getMethod());
             //当前请求URL
@@ -102,15 +108,14 @@ public class FilterSample implements Filter {
                 /***
                  * 这里进行token的验证,验证成功继续下一个Filter失败给出错误信息重新登录
                  * */
-                chain.doFilter(request,response);
             }
         /**
          * redis无token则进行登录验证,验证成功后生成一个token并设置到返回体中
         */
         if(redisUtil.get("Postman-Token") == "" ||redisUtil.get("Postman-Token") == null){
             httpServletResponse.setHeader("Postman-Token","abscdesfajlfajfljdfl");
-            chain.doFilter(request,response);
         }
+        chain.doFilter(request,response);
 
     }
 

@@ -1,8 +1,11 @@
 package com.demo.untils.File;
 
 
+import com.alibaba.fastjson.JSON;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -14,54 +17,26 @@ import java.io.*;
  * @discription: 读取流Stream中的内容
  * @version  1.0
  */
-@Component(value = "readStreamContent")
+@Component(value = "StreamContent")
 public class R_StreamContent {
 
 
     /**
-     * 读取HttpRequest body中内容
+     * 读取HttpRequest body中内容.读取的是post请求参数
      */
 
-    public  String readHttpRequestContent(HttpServletRequest request){
-        String requestBody = "";
+    public JSONObject httpRequestBody(HttpServletRequest request){
         StringBuilder stringBuilder = new StringBuilder();
         InputStream inputStream =null;
         BufferedReader bufferedReader =null;
 
-                try {
-                    inputStream = request.getInputStream();
-                     if(inputStream !=null){
-                         bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                         char [] charBuffer = new char[128];
-                         int bytesRead = -1;
-                         while ((bytesRead = bufferedReader.read(charBuffer))>0){
-                             stringBuilder.append(charBuffer,0,bytesRead);
-                         }
-                     }else {
-                         stringBuilder.append("");
-                     }
-                }catch (IOException exception){
-                    exception.printStackTrace();
-                }finally {
-                    //关闭资源
-                        if(inputStream !=null){
-                                try{
-                                    inputStream.close();
-                                }catch (IOException exception){
-                                    exception.printStackTrace();
-                                }
-                        }
+        /**
+         * 创建返回的JSON对象
+         */
+        JSONObject jsonObject ;
+        jsonObject = new JSONObject();
 
-                        if(bufferedReader !=null){
-                            try {
-                                bufferedReader.close();
-                            }catch (IOException exception){
-                                exception.printStackTrace();
-                            }
-                        }
-                    }
-                requestBody = stringBuilder.toString();
-        return requestBody;
+        return jsonObject;
     }
 
     /**

@@ -1,15 +1,23 @@
 package com.demo.config.Interceptor;
 
+import com.demo.message.Response;
+import com.demo.module.clientmanager.controller.PersonController;
+import com.demo.module.clientmanager.entry.Person;
 import com.demo.module.selectTable.entity.AllTable;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Enumeration;
 
 /**
@@ -52,32 +60,50 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
 //        log.info("LocalName"+request.getLocalName());
 //        log.info("LocalPort"+request.getLocalPort());
 //        log.info("PathInfo"+request.getPathInfo());
-        request.getHeaderNames();
-        System.out.println(request.getAttribute("setAtribute"));
-        Enumeration<String> HeaderNames = request.getHeaderNames();
-        while (HeaderNames.hasMoreElements()){
-            log.error(HeaderNames.nextElement());
-        }
-        response.addHeader("name","value");
-        Cookie cookie = new Cookie("cookie","value");
-        cookie.setHttpOnly(true);
-        cookie.setComment("serComment");
-        /**设置Cookie失效时间**/
-        cookie.setMaxAge(60);
-        //cookie.setSecure(true);
-        response.addCookie(cookie);
+//        request.getHeaderNames();
+//        System.out.println(request.getAttribute("setAtribute"));
+//        Enumeration<String> HeaderNames = request.getHeaderNames();
+//        while (HeaderNames.hasMoreElements()){
+//            log.error(HeaderNames.nextElement());
+//        }
+//        response.addHeader("name","value");
+//        Cookie cookie = new Cookie("cookie","value");
+//        cookie.setHttpOnly(true);
+//        cookie.setComment("serComment");
+//        /**设置Cookie失效时间**/
+//        cookie.setMaxAge(60);
+//        //cookie.setSecure(true);
+//        response.addCookie(cookie);
+        log.error("handler"+handler);
+        /**
+         * 进行必输非必输字段检查思路
+         *     @PostMapping(value = "QryPerson0001")
+         *     public Response getPersonById(){}
+         *  1:可以用过滤器 + 反射机制获取到此时需要过滤的Handler的value值。此时为"QryPerson0001"
+         *  2：数据库中进行配置字段的必输于非必输。此时可以设计一张表专门记录请求/返回。必输/非必输等信息
+         */
         return true;
     }
 
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        log.error("postHandle");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=utf-8");
+        OutputStream out = null;
+
+        JSONObject res = new JSONObject();
+        res.put("name","shajianbin");
+        res.put("msg","交易成功");
+
+        out = response.getOutputStream();
+        out.write(5);
+        //response.reset();
 
     }
-
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         log.error("afterCompletion");
+        log.error("handler:--"+handler);
     }
 }
