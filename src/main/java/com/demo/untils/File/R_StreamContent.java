@@ -30,13 +30,51 @@ public class R_StreamContent {
         InputStream inputStream =null;
         BufferedReader bufferedReader =null;
 
+            try{
+                inputStream = request.getInputStream();
+                if(inputStream !=null) {
+                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    char[] charBuffer = new char[128];
+                    int bytesRead = -1;
+                    while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                        stringBuilder.append(charBuffer, 0, bytesRead);
+                    }
+                }
+                stringBuilder.append("");
+            }catch (IOException e){
+                e.printStackTrace();
+            }finally{
+                /**
+                 * 资源关闭
+                 */
+                if(inputStream !=null){
+                        try {
+                            inputStream.close();
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+                }
+
+                if (bufferedReader !=null){
+                    try {
+                        bufferedReader.close();
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+            System.out.println("****"+stringBuilder);
         /**
          * 创建返回的JSON对象
          */
-        JSONObject jsonObject ;
-        jsonObject = new JSONObject();
-
+        JSONObject jsonObject = null;
+        try{
+            jsonObject = new JSONObject(stringBuilder.toString());
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
         return jsonObject;
+
     }
 
     /**

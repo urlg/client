@@ -4,8 +4,10 @@ import com.demo.message.Response;
 import com.demo.module.clientmanager.controller.PersonController;
 import com.demo.module.clientmanager.entry.Person;
 import com.demo.module.selectTable.entity.AllTable;
+import com.demo.untils.File.R_StreamContent;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +34,9 @@ import java.util.Enumeration;
 @Component(value = "requestAndResponseInterceptor")
 @Order(1)
 public class RequestAndResponseInterceptor implements HandlerInterceptor {
+
+    @Autowired
+    private R_StreamContent StreamContent;
 
     /**
      * @descraption  可以在这里进行字段检查【必输非必输之类】
@@ -82,6 +87,7 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
          *  1:可以用过滤器 + 反射机制获取到此时需要过滤的Handler的value值。此时为"QryPerson0001"
          *  2：数据库中进行配置字段的必输于非必输。此时可以设计一张表专门记录请求/返回。必输/非必输等信息
          */
+        System.out.println(StreamContent.httpRequestBody(request).get("msg"));
         return true;
     }
 

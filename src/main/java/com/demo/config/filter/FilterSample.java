@@ -23,8 +23,6 @@ public class FilterSample implements Filter {
     @Autowired
     private  RedisUtil redisUtil;
 
-    @Autowired
-    private R_StreamContent StreamContent;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -48,7 +46,7 @@ public class FilterSample implements Filter {
         //获取主机IP或者Name
         log.error(request.getServerName());
         //设置字符编码格式
-        request.setCharacterEncoding("utf8");
+        //request.setCharacterEncoding("utf8");
         //向ServletRequest对象中设置参数
         request.setAttribute("user","王晓民");
 
@@ -61,7 +59,6 @@ public class FilterSample implements Filter {
          * **/
         HttpServletRequest   httpServletRequest  = (HttpServletRequest)request;
         HttpServletResponse  httpServletResponse = (HttpServletResponse)response;
-            StreamContent.httpRequestBody(httpServletRequest);
             //获取当前请求方法
             log.error("Method:"+httpServletRequest.getMethod());
             //当前请求URL
