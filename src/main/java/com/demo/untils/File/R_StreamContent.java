@@ -34,7 +34,7 @@ public class R_StreamContent {
         InputStream inputStream =null;
 
         /***
-         * @description 处理流 缓冲流
+         * @description 处理流 缓冲流 默认构造函数具有8kb的缓存区
          */
         BufferedReader bufferedReader =null;
 
@@ -52,11 +52,20 @@ public class R_StreamContent {
 
                     /**
                      * 读取数据
+                     *
+                     *      首先bufferedReader.read(charBuffer)一次性读取bufferedReader缓存大小的数据。放在缓冲区。
+                     *      接着将bufferedReader缓存区的数据刷新到charBuffer数组中，如果charBuffer数组大小未被填充满则继续调用bufferedReader.read(charBuffer)
+                     *      再次填充charBuffer数组,直至charBuffer数组填充满,此时返回读取的字节个数然后继续上述过程直至数据源读取完毕。
+                     *
+                     *      stringBuilder.append(charBuffer, 0, bytesRead)将指定字节数组内的数据(数据值为二进制转换成的int类型)转换为StringBuilder对象
                      */
-                    char[] charBuffer = new char[128];
+                    char[] charBuffer = new char[10];
                     int bytesRead = -1;
                     while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-                        //System.out.println(bufferedReader.read(charBuffer));
+
+                        /***
+                         * 每次charBuffer被填充满后则将填充的字节数组转换StringBuild对象并拼接StringBuilder对象
+                         */
                         stringBuilder.append(charBuffer, 0, bytesRead);
                     }
 
