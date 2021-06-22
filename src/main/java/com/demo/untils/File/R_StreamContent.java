@@ -27,18 +27,39 @@ public class R_StreamContent {
 
     public JSONObject httpRequestBody(HttpServletRequest request){
         StringBuilder stringBuilder = new StringBuilder();
+
+        /***
+         * @description 字节流
+         */
         InputStream inputStream =null;
+
+        /***
+         * @description 处理流 缓冲流
+         */
         BufferedReader bufferedReader =null;
 
-            try{
+        /***
+         * @description 处理流 将字节流转换为字符流
+         */
+        InputStreamReader inputStreamReader = null;
+
+        try{
                 inputStream = request.getInputStream();
                 if(inputStream !=null) {
-                    bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                    inputStreamReader = new InputStreamReader(inputStream);
+                    bufferedReader = new BufferedReader(inputStreamReader);
+
+                    /**
+                     * 读取数据
+                     */
                     char[] charBuffer = new char[128];
                     int bytesRead = -1;
                     while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
+                        //System.out.println(bufferedReader.read(charBuffer));
                         stringBuilder.append(charBuffer, 0, bytesRead);
                     }
+
                 }
                 stringBuilder.append("");
             }catch (IOException e){
