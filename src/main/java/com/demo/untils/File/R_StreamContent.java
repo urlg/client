@@ -59,7 +59,7 @@ public class R_StreamContent {
                      *
                      *      stringBuilder.append(charBuffer, 0, bytesRead)将指定字节数组内的数据(数据值为二进制转换成的int类型)转换为StringBuilder对象
                      */
-                    char[] charBuffer = new char[10];
+                    char[] charBuffer = new char[128];
                     int bytesRead = -1;
                     while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
 

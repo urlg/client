@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.comm.mapper.CommonManager">
+
+    <resultMap id="BaseResultMap" type="com.demo.comm.entity.Common">
+        <!--@Table -->
+        <result property="commcode" column="commcode" jdbcType="VARCHAR"/>
+        <result property="field" column="field" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询comm表中字段进行必输非必输检查-->
+    <select id="getPersonInfo" resultMap="BaseResultMap">
+            SELECT * from mysql.common where commcode = #{commcode}
+    </select>
+
+</mapper>
