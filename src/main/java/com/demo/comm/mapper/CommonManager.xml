@@ -4,13 +4,13 @@
 
     <resultMap id="BaseResultMap" type="com.demo.comm.entity.Common">
         <!--@Table -->
-        <result property="commcode" column="commcode" jdbcType="VARCHAR"/>
+        <result property="commCode" column="commcode" jdbcType="VARCHAR"/>
         <result property="field" column="field" jdbcType="VARCHAR"/>
         <result property="type" column="type" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询comm表中字段进行必输非必输检查-->
-    <select id="getPersonInfo" resultMap="BaseResultMap">
+    <select id="getCommonInfo" resultMap="BaseResultMap">
             SELECT * from mysql.common where commcode = #{commcode}
     </select>
 

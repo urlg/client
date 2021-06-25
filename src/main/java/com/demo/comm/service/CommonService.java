@@ -1,5 +1,6 @@
 package com.demo.comm.service;
 
+import com.demo.comm.entity.Common;
 import com.demo.comm.mapper.CommonManager;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
@@ -16,7 +17,7 @@ public class CommonService implements CommonManager {
     @Autowired
     CommonManager commonManager;
     @Override
-    public ArrayList getCommonInfo(String commcode) {
+    public ArrayList <Common>getCommonInfo(String commcode) {
         ArrayList arrayList = commonManager.getCommonInfo(commcode);
 
         /**

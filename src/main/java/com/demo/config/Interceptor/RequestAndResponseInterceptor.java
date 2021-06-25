@@ -1,5 +1,7 @@
 package com.demo.config.Interceptor;
 
+import com.demo.comm.entity.Common;
+import com.demo.comm.result.CommonDB;
 import com.demo.comm.service.CommonService;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  * @author  A-8626 沙建斌
@@ -37,6 +40,9 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
 
     @Autowired
     CommonService commonService;
+
+    @Autowired
+    CommonDB commonDB;
 
     /**
      * @descraption  可以在这里进行字段检查【必输非必输之类】
@@ -87,7 +93,10 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
          *  1:可以用过滤器 + 反射机制获取到此时需要过滤的Handler的value值。此时为"QryPerson0001"
          *  2：数据库中进行配置字段的必输于非必输。此时可以设计一张表专门记录请求/返回。必输/非必输等信息
          */
-        Method  method = Class.forName("com.demo.module.clientmanager.controller.PersonController").getMethod("getPersonById");
+        String string = handler.toString();
+        String[] str = string.split("#");
+
+        Method  method = Class.forName(str[0]).getMethod(str[1].substring(0,str[1].length()-2));
 
         /**
          * 判断此方法上是否具有PostMapping   ->后期需判断是否具有所有支持Post请求的注解
@@ -96,9 +105,11 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
             throw new GlobalException(ErrorCodeAndMsg.IS_NOT_POSTMAPPING);
         }
 
-        commonService.getCommonInfo(method.getAnnotation(PostMapping.class).value()[0]);
-
-        System.out.println(StreamContent.httpRequestBody(request).get("msg"));
+        /**
+         * 查询到的返回结果进行必输校验
+         */
+        ArrayList<Common> arrayList = commonService.getCommonInfo(method.getAnnotation(PostMapping.class).value()[0]+".req");
+        commonDB.FieldCheck(arrayList,StreamContent.httpRequestBody(request));
         return true;
     }
 

@@ -1,13 +1,11 @@
 package com.demo.untils.File;
 
 
-import com.alibaba.fastjson.JSON;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
@@ -23,6 +21,7 @@ public class R_StreamContent {
 
     /**
      * 读取HttpRequest body中内容.读取的是post请求参数
+     * @return
      */
 
     public JSONObject httpRequestBody(HttpServletRequest request){
@@ -93,7 +92,6 @@ public class R_StreamContent {
                     }
                 }
             }
-            System.out.println("****"+stringBuilder);
         /**
          * 创建返回的JSON对象
          */
