@@ -21,7 +21,7 @@ public class R_StreamContent {
 
     /**
      * 读取HttpRequest body中内容.读取的是post请求参数
-     * @return
+     * @return JSONObject 返回一个JSONObject对象
      */
 
     public JSONObject httpRequestBody(HttpServletRequest request){
