@@ -41,7 +41,11 @@ public class CommonDB {
 
                     boolean boo = requestJson.getString(commons.getField()).isEmpty();
                     if(boo){
-                        throw new GlobalException(ErrorCodeAndMsg.TRANS_FAILD);
+                        //throw new GlobalException(ErrorCodeAndMsg.TRANS_FAILD);
+                        /**
+                         * try catch语句中只要try语句中抛出异常后都会被catch内捕获进行处理,因此在这里只要抛出异常即可。
+                         */
+                        throw  new Exception();
                     }
 
                 }catch (Exception e){
