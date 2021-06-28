@@ -13,25 +13,31 @@ public enum ErrorCodeAndMsg {
     IS_NOT_READY("ISN002","流未准备好读取"),
     IS_NOT_POSTMAPPING("ISN003","此方法无PostMapping注解"),
     IS_NULL_BODY("ISN003","body体不能为空"),
-    NETWORK_ERROR("9999","网路连接异常");
+    NETWORK_ERROR("999999","网路连接异常"),
+
+    /**
+     * 这个枚举用来检查字段必输与非必输的
+     */
+    ErrorCodeAndMsg;
 
     private String code;
     private String msg;
-
-    ErrorCodeAndMsg(){
-
-    }
+    ErrorCodeAndMsg(){}
 
     /**
-     * 这块地构造方法有点没有理解
      * @param code
      * @param msg
      */
-    ErrorCodeAndMsg(String code,String msg){
+    ErrorCodeAndMsg(String code, String msg){
         this.code = code;
         this.msg  = msg;
     }
 
+    public ErrorCodeAndMsg fieldIsNotNull(String code,String msg){
+        ErrorCodeAndMsg.setCode(code);
+        ErrorCodeAndMsg.setMsg(msg);
+        return ErrorCodeAndMsg;
+    }
     public String getCode() {
         return code;
     }
