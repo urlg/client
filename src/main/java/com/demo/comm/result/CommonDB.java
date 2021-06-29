@@ -1,21 +1,20 @@
 package com.demo.comm.result;
 
-import com.alibaba.fastjson.support.odps.udf.CodecCheck;
 import com.demo.comm.entity.Common;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.GlobalException;
-import com.demo.untils.Exception.Singleton;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 /**
- * 对数据库查询返回的数据进行处理
+ * 对common表配置的字段进行处理
+ *      检查body不能为空
+ *      检查必输字段是否必输   userName   Y
+ *      检查list格式是否必输  clientInfo.clientNo  Y
+ *      检查动态字段是否必输   如：userName存在时clientNo必输
  */
 @Component("commonDB")
 public class CommonDB {
@@ -58,38 +57,22 @@ public class CommonDB {
                      */
                     if(include){
                         String [] strings = commons.getField().split("\\.");
-                        System.out.println(requestJson.getString("ClientInfo"));
-                        for (int i = 0;i<strings.length;i++){
-                           filed = strings[i];
-
-                            /**
-                             *     {
-                             *         "ClientInfo": [
-                             *             {
-                             *                 "ClientNo": 1400121424,
-                             *                 "age": 28,
-                             *                 "name": "张小龙"
-                             *             }
-                             *         ],
-                             *
-                             *         "offset": "1",
-                             *         "limit":"1"
-                             *     }
-                             *
-                             * 这里需要循环JSONArray对象获取ClientNo是否为空。数据库配置的是ClientInfo.ClientNo  Y
-                             */
-                            requestJson.getJSONArray(strings[i]);
-
+                            filed = strings[0];
+                            JSONArray jsonArray = requestJson.getJSONArray(filed);
+                            /**如果jsonArray为空则表明必输项条件不满足**/
+                            if(jsonArray.length() == 0) throw  new RuntimeException();
+                            for(int k = 0;k<jsonArray.length();k++){
+                                filed = strings[1];
+                                if(jsonArray.getJSONObject(k).getString(strings[1]).isEmpty()){
+                                    throw new RuntimeException();
+                                }
+                            }
                         }
-                    }
                 }catch (Exception e){
-                    throw  new GlobalException(ErrorCodeAndMsg.ErrorCodeAndMsg.fieldIsNotNull("FIN001",filed+"不能为空"));
+                    throw  new GlobalException(ErrorCodeAndMsg.ErrorCodeAndMsg.fieldIsNull("FIN001",filed+"不能为空"));
                 }
             }
-
-
         }
-
         return true;
     }
 }

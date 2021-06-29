@@ -33,7 +33,7 @@ public enum ErrorCodeAndMsg {
         this.msg  = msg;
     }
 
-    public ErrorCodeAndMsg fieldIsNotNull(String code,String msg){
+    public ErrorCodeAndMsg fieldIsNull(String code,String msg){
         ErrorCodeAndMsg.setCode(code);
         ErrorCodeAndMsg.setMsg(msg);
         return ErrorCodeAndMsg;
