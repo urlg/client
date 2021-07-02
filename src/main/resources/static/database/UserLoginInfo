@@ -1,2 +1,72 @@
-#用户登录信息表 记录用户登录信息
+show databases;
+use mysql;
+
+CREATE TABLE `comm` (
+                        `commcode` varchar(128)  	COMMENT '通讯码',
+                        `field` varchar(128)  	COMMENT '字段名称',
+                        `type` varchar(128)  		COMMENT '字段类型'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='通讯表';
+
+insert into common value('QryPerson0001.req','offset','limit');
+
+SELECT * FROM mysql.common;
+/**
+  对表中的列操作
+    1:可以向表中添加一个新的列
+    2:可以更改表中某一列的类型
+  **/
+  INSERT INTO mysql.common VALUES(default,default,default,default,default,default);
+ALTER TABLE mysql.common  drop column SEXY;
+ALTER TABLE  mysql.common ADD COLUMN  SEXY ENUM('1','2','3') COMMENT '性别 1-男 2-女 3-未知' default '1';
+/**添加表被修改时间  9999-12-31 23:59:59 **/
+ALTER TABLE mysql.common ADD COLUMN  UPDATETIME DATETIME DEFAULT NOW();
+
+/**修改表中列  更改列名称  更改列类型**/
+ALTER TABLE mysql.common CHANGE flag NECESSARY CHAR AFTER SEXY;
+ALTER TABLE mysql.common CHANGE field FIELD CHAR(20) DEFAULT 'Object' COMMENT '字段';
+ALTER TABLE mysql.common CHANGE NECESSARY NECESSARY ENUM('Y','N') NULL COMMENT '是否必须 Y-是 N-否';
+ALTER TABLE mysql.common CHANGE SEXY SEXY ENUM('1','2') DEFAULT '1';
+
+/**default默认值的意义为当表增加某一列时此列都会取当前设置的默认值,如下语句UPDATETIME列被增加时此列就会有当前时间戳默认值**/
+ALTER TABLE mysql.common ADD COLUMN  UPDATETIME DATETIME DEFAULT NOW();
+
+SHOW FULL  COLUMNS  FROM mysql.employee;
+ALTER TABLE mysql.common ADD INDEX queryName (FIELD,SEXY);
+ALTER TABLE mysql.common ADD INDEX queryName (SEXY);
+ALTER TABLE mysql.common ADD INDEX queryName1 (FIELD);
+ALTER TABLE mysql.common DROP INDEX INDEXTEST ;
+SHOW FULL COLUMNS FROM mysql.common;
+SHOW INDEX FROM mysql.common;
+
+ALTER TABLE mysql.common CHANGE type TYPE CHAR(13);
+ALTER TABLE mysql.common ADD COLUMN CLIENTID INT(12) UNIQUE;
+ALTER TABLE mysql.common ADD COLUMN CLIENTNO INT(12) UNIQUE;
+CREATE UNIQUE INDEX  INDEXTEST  ON COMMON (TYPE(10),FIELD(14));
+
+ALTER TABLE  mysql.common CHANGE COLUMN COMMONCODE COMMONCODE CHAR(123) COMMENT '通讯码';
+ALTER TABLE  mysql.common CHANGE COLUMN FIELD FIELD CHAR(20) COMMENT '需要检查的字段';
+ALTER TABLE  mysql.common CHANGE COLUMN TYPE TYPE CHAR(13) COMMENT '字段类型';
+ALTER TABLE  mysql.common CHANGE COLUMN SEXY SEXY ENUM('1','2','3') COMMENT '性别 1-男 2-女 3-未知';
+ALTER TABLE  mysql.common CHANGE COLUMN UPDATETIME UPDATETIME DATETIME COMMENT '行数据更新时间';
+ALTER TABLE  mysql.common CHANGE COLUMN CLIENTNO CLIENTNO INT(10) COMMENT '客户号';
+
+SELECT  * FROM mysql.common;
+SHOW  FULL COLUMNS  FROM mysql.common;
+ALTER TABLE mysql.common CHANGE CLIENTNO CLIENTNO INT(5) NOT NULL ;
+/**添加多列索引**/
+ALTER TABLE  mysql.common ADD UNIQUE INDEX queryUnique (COMMONCODE,FIELD,NECESSARY) ;
+/**修改列**/
+ALTER TABLE  mysql.common CHANGE COLUMN NECESSARY NECESSARY ENUM('Y','N') NOT NULL DEFAULT 'N' COMMENT '是否必须 Y-是 N-否';
+ALTER TABLE  mysql.common CHANGE COLUMN SEXY SEXY ENUM('1','2','3') NOT NULL  DEFAULT '3' COMMENT '性别 1-男 2-女 3-未知';
+/**给表添加一个主键  主键的作用是唯一标注一行数据 主键不能为空且唯一**/
+ALTER TABLE mysql.common ADD PRIMARY KEY primaryKey (CLIENTNO);
+ALTER TABLE mysql.common CHANGE COLUMN CLIENTNO CLIENTNO INT(10) AUTO_INCREMENT COMMENT '客户号';
+/**删除表中字段**/
+ALTER TABLE mysql.common DROP CLIENTID;
+/**删除索引**/
+ALTER TABLE  mysql.common DROP INDEX INDEXTEST;
+/**添加列默认字符集**/
+ALTER TABLE  mysql.common DEFAULT  CHARACTER SET  UTF8 COLLATE utf8_general_ci;
+/**查看表创建语句 -是当前信息。因为表被创建后可能会被更改,以下语法指示的是更改后的创建语句**/
+SHOW  CREATE TABLE mysql.common;#用户登录信息表 记录用户登录信息
 	
