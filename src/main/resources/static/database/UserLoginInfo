@@ -69,4 +69,3 @@ ALTER TABLE  mysql.common DROP INDEX INDEXTEST;
 ALTER TABLE  mysql.common DEFAULT  CHARACTER SET  UTF8 COLLATE utf8_general_ci;
 /**查看表创建语句 -是当前信息。因为表被创建后可能会被更改,以下语法指示的是更改后的创建语句**/
 SHOW  CREATE TABLE mysql.common;#用户登录信息表 记录用户登录信息
-	
