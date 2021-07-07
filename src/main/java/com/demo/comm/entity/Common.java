@@ -5,56 +5,69 @@ import java.util.Objects;
 
 public class Common {
 
-  private String commCode;
-  private String field;
-  private String type;
-  private String flag;
+  private String commonCode;
+  private String checkField;
+  private String isNecessary;
+  private java.sql.Timestamp createTime;
 
-  public String getCommCode() {
-    return commCode;
+
+  public String getCommonCode() {
+
+    return commonCode;
   }
 
-  public void setCommCode(String commCode) {
-    this.commCode = commCode;
+  public void setCommonCode(String commonCode) {
+
+    this.commonCode = commonCode;
   }
 
-  public String getField() {
-    return field;
+
+  public String getCheckField() {
+
+    return checkField;
   }
 
-  public void setField(String field) {
-    this.field = field;
+  public void setCheckField(String checkField)
+  {
+    this.checkField = checkField;
   }
 
-  public String getType() {
-    return type;
+
+  public String getIsNecessary()
+  {
+    return isNecessary;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setIsNecessary(String isNecessary) {
+
+    this.isNecessary = isNecessary;
   }
 
-  public String getFlag() {
-    return flag;
+
+  public java.sql.Timestamp getCreateTime() {
+
+    return createTime;
   }
 
-  public void setFlag(String flag) {
-    this.flag = flag;
+  public void setCreateTime(java.sql.Timestamp createTime) {
+
+    this.createTime = createTime;
   }
 
+  /**重写equals**/
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (o == null || getClass() != o.getClass()) return false;
     Common common = (Common) o;
-    return Objects.equals(commCode, common.commCode) &&
-            Objects.equals(field, common.field) &&
-            Objects.equals(type, common.type) &&
-            Objects.equals(flag, common.flag);
+    return commonCode.equals(common.commonCode) &&
+            checkField.equals(common.checkField) &&
+            isNecessary.equals(common.isNecessary) &&
+            createTime.equals(common.createTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(commCode, field, type, flag);
+    return Objects.hash(commonCode, checkField, isNecessary, createTime);
   }
 }
