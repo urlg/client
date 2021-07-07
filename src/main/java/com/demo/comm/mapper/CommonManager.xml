@@ -4,14 +4,21 @@
 
     <resultMap id="BaseResultMap" type="com.demo.comm.entity.Common">
         <!--@Table -->
-        <result property="commCode" column="commcode" jdbcType="VARCHAR"/>
-        <result property="field" column="field" jdbcType="VARCHAR"/>
-        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="commonCode" column="COMMON_CODE" jdbcType="CHAR"/>
+        <result property="checkField" column="CHECK_FIELD" jdbcType="CHAR"/>
+        <result property="isNecessary" column="IS_NECESSARY" jdbcType="CHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
     </resultMap>
 
-    <!--查询comm表中字段进行必输非必输检查-->
-    <select id="getCommonInfo" resultMap="BaseResultMap">
-            SELECT * from mysql.common where commcode = #{commcode}
+
+    <!--查询spdb.common表中所有信息-->
+    <select id="getAllCommonInfo" resultMap="BaseResultMap">
+            SELECT * from spdb.common
     </select>
 
+    <!--向spdb.common表中添加一条数据-->
+    <insert id="insertCommon" parameterType="com.demo.comm.entity.Common">
+        insert into spdb.common(common_code, check_field, is_necessary, create_time)
+         VALUES (#{commonCode},#{checkField},#{isNecessary},default)
+    </insert>
 </mapper>

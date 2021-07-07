@@ -108,8 +108,8 @@ public class RequestAndResponseInterceptor implements HandlerInterceptor {
         /**
          * 查询到的返回结果进行必输校验
          */
-        ArrayList<Common> arrayList = commonService.getCommonInfo(method.getAnnotation(PostMapping.class).value()[0]+".req");
-        commonDB.FieldCheck(arrayList,StreamContent.httpRequestBody(request));
+        //ArrayList<Common> arrayList = commonService.getCommonInfo(method.getAnnotation(PostMapping.class).value()[0]+".req");
+        //commonDB.FieldCheck(arrayList,StreamContent.httpRequestBody(request));
         return true;
     }
 

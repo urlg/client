@@ -7,6 +7,7 @@ import com.demo.message.GlobalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @SuppressWarnings("all")
@@ -16,17 +17,25 @@ public class CommonService implements CommonManager {
 
     @Autowired
     CommonManager commonManager;
-    @Override
-    public ArrayList <Common>getCommonInfo(String commcode) {
-        ArrayList arrayList = commonManager.getCommonInfo(commcode);
 
-        /**
-         * 查询无记录
-         */
-        if(arrayList.size()<1){
-            throw new GlobalException(ErrorCodeAndMsg.IS_NULL_RECORD);
-        }
-        return arrayList;
+    /**
+     * @description 查询spdb.common表中所有信息
+     * **/
+
+    @Override
+    public ArrayList<Common> getAllCommonInfo() {
+        ArrayList<Common> result = commonManager.getAllCommonInfo();
+            if (result.isEmpty()){
+                throw new GlobalException(ErrorCodeAndMsg.IS_NULL_RECORD);
+            }
+        return commonManager.getAllCommonInfo();
+    }
+
+    @Override
+    public int insertCommon(String commonCode, String checkField, String isNecessary) {
+        int result;
+            result =commonManager.insertCommon(commonCode,checkField,isNecessary);
+        return result;
     }
 
 

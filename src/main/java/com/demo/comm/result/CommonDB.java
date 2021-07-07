@@ -38,8 +38,8 @@ public class CommonDB {
         for(Common commons:arrayList ) {
 
             /**匹配单字段 当前端字符串不存在即为null或者字符串存在但是为空的话**/
-            if(commons.getFlag().equals("Y")){
-                boolean include = commons.getField().contains(".");
+            if(commons.getIsNecessary().equals("Y")){
+                boolean include = commons.getCheckField().contains(".");
                 String filed = "";
                 try{
 
@@ -47,8 +47,8 @@ public class CommonDB {
                      * 匹配当前单字段
                      * try catch语句中只要try语句中抛出异常后都会被catch内捕获进行处理,因此在这里只要抛出异常即可。
                      */
-                    if(!include && requestJson.getString(commons.getField()).isEmpty()){
-                        filed = commons.getField();
+                    if(!include && requestJson.getString(commons.getCheckField()).isEmpty()){
+                        filed = commons.getCheckField();
                         throw  new RuntimeException();
                     }
 
@@ -56,7 +56,7 @@ public class CommonDB {
                      * 匹配list
                      */
                     if(include){
-                        String [] strings = commons.getField().split("\\.");
+                        String [] strings = commons.getCheckField().split("\\.");
                             filed = strings[0];
                             JSONArray jsonArray = requestJson.getJSONArray(filed);
                             /**如果jsonArray为空则表明必输项条件不满足**/
