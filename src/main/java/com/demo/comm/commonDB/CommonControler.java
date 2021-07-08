@@ -1,5 +1,6 @@
 package com.demo.comm.commonDB;
 
+import com.demo.comm.entity.Common;
 import com.demo.comm.service.CommonService;
 import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.Response;
@@ -31,9 +32,33 @@ public class CommonControler {
 
     /**向spdb.common表中增加一条数据**/
     @ResponseBody
-    @PostMapping("common002")
+    @PostMapping("insertCommon001")
     public Response insertCommon(){
-        commonService.insertCommon("QryPerson0002.req","clientNo","N");
+        commonService.insertCommon("QryPerson0003.req","clientNo","Y");
+        return new Response();
+    }
+
+    /**更新spdb.common表数据**/
+    @ResponseBody
+    @PostMapping("updateCommon001")
+    public  Response updateCommonByCommonCode(){
+        Common common = new Common();
+        common.setCommonCode("QryPerson0002");
+        common.setCheckField("name");
+        common.setIsNecessary("Y");
+        commonService.updateCommonByCommonCode(common);
+        return new Response();
+    }
+
+    /**
+     * @description 通过common_code删除spdb.common表中一条数据
+     * **/
+    @ResponseBody
+    @PostMapping("deleteCommon001")
+    public Response deleteCommonByCommonCode(){
+        Common common = new Common();
+        common.setCommonCode("QryPerson0001");
+        commonService.deleteCommonByCommonCode(common);
         return new Response();
     }
 }

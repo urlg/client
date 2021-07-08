@@ -31,11 +31,36 @@ public class CommonService implements CommonManager {
         return commonManager.getAllCommonInfo();
     }
 
+    /**
+     * @description 向spdb.commom表中增加一条数据
+     * **/
     @Override
     public int insertCommon(String commonCode, String checkField, String isNecessary) {
         int result;
             result =commonManager.insertCommon(commonCode,checkField,isNecessary);
         return result;
+    }
+
+    /**
+     * 更新spdb.common表数据
+     *  这边传递进来的应该不是Common对象,暂时先这样写
+     * @param common
+     **/
+    @Override
+    public int updateCommonByCommonCode(Common common) {
+        common.setCommonCode(common.getCommonCode()+".req");
+        return commonManager.updateCommonByCommonCode(common);
+    }
+
+    /**
+     * 通过common_code删除spdb.comm表中一条数据
+     *
+     * @param common
+     **/
+    @Override
+    public int deleteCommonByCommonCode(Common common) {
+        common.setCommonCode(common.getCommonCode()+".req");
+        return commonManager.deleteCommonByCommonCode(common);
     }
 
 

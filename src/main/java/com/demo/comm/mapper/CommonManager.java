@@ -18,4 +18,10 @@ public interface CommonManager {
            String checkField,
            String isNecessary
    );
+
+   /**更新spdb.common表数据**/
+   public  int updateCommonByCommonCode(Common common);
+
+   /**通过common_code删除spdb.comm表中一条数据**/
+   public int deleteCommonByCommonCode(Common common);
 }
