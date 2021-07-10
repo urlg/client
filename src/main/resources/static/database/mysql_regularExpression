@@ -1,0 +1,35 @@
+/**Mysql的正则表达式**/
+    #匹配一个字符串不管位置如何
+SELECT * FROM spdb.common  WHERE CREATE_TIME REGEXP '39';
+    #匹配以21开头的字符串
+SELECT * FROM spdb.common  WHERE CREATE_TIME REGEXP '^21';
+    #匹配以21结尾的字符串
+SELECT * FROM spdb.common WHERE CREATE_TIME REGEXP '21$';
+    #匹配CHECK_FIELD = 'Name',即REGEXP模式匹配全字符Name
+SELECT * FROM spdb.common  WHERE CHECK_FIELD REGEXP '^ap';
+
+    #匹配指定字符串开头和指定字符串结尾
+SELECT  * FROM spdb.common  WHERE CREATE_TIME REGEXP '^20.*21$';
+    #或者以下格式
+SELECT * FROM spdb.common  WHERE CREATE_TIME REGEXP '^20.*.21$';
+
+    #匹配中间位置有指定字符串A的字符串
+SELECT * FROM spdb.common  WHERE CREATE_TIME REGEXP '.2.';
+    #匹配A|B
+SELECT * FROM spdb.common  WHERE CHECK_FIELD REGEXP 'age|gender';
+SELECT * FROM spdb.common  WHERE CHECK_FIELD REGEXP '^a|^g';
+SELECT * FROM spdb.common  WHERE CHECK_FIELD REGEXP  '(^a|^g).*.$';
+
+    #范围匹配[]的使用
+    #匹配包含y-z的字符,不管位置在哪里
+SELECT * FROM spdb.common WHERE CHECK_FIELD REGEXP '[y-z]';
+    #匹配以a-d开头
+SELECT * FROM spdb.common WHERE CHECK_FIELD REGEXP '^[a-d]';
+#匹配以a-d开头且指定字符结束
+SELECT * FROM spdb.common WHERE CHECK_FIELD REGEXP '^[a-d].*.t$';
+SELECT * FROM spdb.common WHERE CREATE_TIME REGEXP '^20.*.26$';
+    #匹配次数a{m,n}的使用.即整个字符串内匹配a m-n次:如a{1,3} 匹配s,ss,sss。a{2}与a多个匹配如a,aa.a{3,}匹配 a,aa,aaa,a....
+    #整个字符串中匹配一次a不管位置在哪里
+SELECT * FROM spdb.common WHERE CHECK_FIELD REGEXP 'a{1}';
+    #匹配任何字符(包括回车和新行)
+SELECT * FROM spdb.common WHERE CREATE_TIME REGEXP '^20.*$';
