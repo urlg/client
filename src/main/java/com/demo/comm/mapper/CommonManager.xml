@@ -17,6 +17,11 @@
             SELECT * from spdb.common
     </select>
 
+    <!--使用存储过程查询spdb.common表中所有信息-->
+    <select id="CommonInfoByCommonCode" parameterType="com.demo.comm.entity.Common" resultMap="BaseResultMap" statementType="CALLABLE">
+        call spdb.Test(#{checkField})
+    </select>
+
     <!--向spdb.common表中添加一条数据-->
     <insert id="insertCommon" timeout="60"   parameterType="com.demo.comm.entity.Common">
         insert into spdb.common(common_code, check_field, is_necessary, create_time)

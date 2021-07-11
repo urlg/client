@@ -24,4 +24,7 @@ public interface CommonManager {
 
    /**通过common_code删除spdb.comm表中一条数据**/
    public int deleteCommonByCommonCode(Common common);
+
+   /**使用MySQL的存储过程查询spdb.common表信息**/
+  public ArrayList<Common> CommonInfoByCommonCode(Common common);
 }

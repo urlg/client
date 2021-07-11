@@ -61,4 +61,13 @@ public class CommonControler {
         commonService.deleteCommonByCommonCode(common);
         return new Response();
     }
+
+    /**调用MySQL的存储过程**/
+    @ResponseBody
+    @PostMapping("PROCEDURE")
+    public Response CommonInfoByCommonCode(){
+        Common common = new Common();
+        common.setCheckField("Name");
+        return new Response(commonService.CommonInfoByCommonCode(common));
+    }
 }
