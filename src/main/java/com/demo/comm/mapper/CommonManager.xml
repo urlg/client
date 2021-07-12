@@ -44,4 +44,6 @@
                                 ORDER BY CREATE_TIME
                                 LIMIT 10
     </delete>
+
+
 </mapper>

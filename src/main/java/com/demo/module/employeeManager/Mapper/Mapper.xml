@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.module.employeeManager.Entity">
+
+    <resultMap id="BaseResultMap" type="com.demo.module.employeeManager.Entity.EmployeeInfo">
+        <!--@Table -->
+        <result property="commonCode" column="COMMON_CODE" jdbcType="CHAR"/>
+        <result property="checkField" column="CHECK_FIELD" jdbcType="CHAR"/>
+        <result property="isNecessary" column="IS_NECESSARY" jdbcType="CHAR"/>
+        <result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+
+</mapper>

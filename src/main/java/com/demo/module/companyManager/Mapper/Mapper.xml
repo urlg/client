@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.module.companyManager.Mapper.Manager">
+
+
+    <resultMap id="BaseResultMap" type="com.demo.module.companyManager.Entity.CompanyEntity">
+        <!--@Table -->
+        <result property="companyName" column="company_name" jdbcType="CHAR"/>
+        <result property="companyCode" column="company_code" jdbcType="CHAR"/>
+        <result property="companyDepartment" column="company_department" jdbcType="CHAR"/>
+        <result property="companyUsing" column="company_using" jdbcType="CHAR"/>
+        <!--
+        <collection property="employee" ofType="com.demo.module.employeeManager.Entity.EmployeeInfo">
+
+            <result property="companyCode" column="company_code" jdbcType="CHAR"/>
+            <result property="empName" column="emp_name" jdbcType="CHAR"/>
+            <result property="empTime" column="emp_time" jdbcType="TIMESTAMP"/>
+            <result property="empDepartment" column="emp_department" jdbcType="CHAR"/>
+            <result property="empType" column="emp_type" jdbcType="CHAR"/>
+
+        </collection>
+        -->
+    </resultMap>
+
+    <!--实现一对多查询表Company和employee-->
+    <select id="CompanyAndEmp" parameterType="String" resultMap="BaseResultMap">
+        select * from spdb.company_info where company_code = #{companyCode}
+    </select>
+</mapper>

@@ -25,9 +25,7 @@ spring:
     connect-timeout: 6000
     database: 0
 
-#集成Mybatis
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
+
 server:
   port: 9090
 
