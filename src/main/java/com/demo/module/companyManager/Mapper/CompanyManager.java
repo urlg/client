@@ -6,8 +6,11 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository("companyManager")
-public interface Manager {
+public interface CompanyManager {
 
     /**根据companyCode查询表Company和employee**/
-   public ArrayList<CompanyEntity> CompanyAndEmp(String companyCode);
+   public ArrayList<CompanyEntity> SelectCompanyAndEmp(String companyCode);
+
+   /**根据companyCode删除表company和employee**/
+   public int deleteCompanyAndEmployee(String companyCode);
 }

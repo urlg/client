@@ -15,7 +15,15 @@ public class CompanyController {
     @ResponseBody
     @PostMapping("CompanyAndEmp")
     public Response selectCompanyAndEmp(){
-        String code ="00000010";
-        return new Response(companyService.CompanyAndEmp(code));
+        String code ="10000001";
+        return new Response(companyService.SelectCompanyAndEmp(code));
+    }
+
+    /**根据companyCode删除表company和employee**/
+    @ResponseBody
+    @PostMapping("deleteCompanyAndEmployee")
+    public int deleteCompanyAndEmployee(){
+        String code ="10000002";
+        return companyService.deleteCompanyAndEmployee(code);
     }
 }

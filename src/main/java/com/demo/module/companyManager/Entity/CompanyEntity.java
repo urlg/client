@@ -1,6 +1,9 @@
 package com.demo.module.companyManager.Entity;
 
 
+import com.demo.module.employeeManager.Entity.EmployeeInfo;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**公司表**/
@@ -11,6 +14,16 @@ public class CompanyEntity {
   private String companyDepartment;
   private String companyUsing;
 
+  /**将对象employee实体类**/
+  private ArrayList<EmployeeInfo> employeeInfos;
+
+  public ArrayList<EmployeeInfo> getEmployeeInfos() {
+    return employeeInfos;
+  }
+
+  public void setEmployeeInfos(ArrayList<EmployeeInfo> employeeInfos) {
+    this.employeeInfos = employeeInfos;
+  }
 
   public String getCompanyName() {
     return companyName;

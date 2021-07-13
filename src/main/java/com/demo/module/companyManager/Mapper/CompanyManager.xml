@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.demo.module.companyManager.Mapper.Manager">
-
+<mapper namespace="com.demo.module.companyManager.Mapper.CompanyManager">
 
     <resultMap id="BaseResultMap" type="com.demo.module.companyManager.Entity.CompanyEntity">
         <!--@Table -->
@@ -9,21 +8,29 @@
         <result property="companyCode" column="company_code" jdbcType="CHAR"/>
         <result property="companyDepartment" column="company_department" jdbcType="CHAR"/>
         <result property="companyUsing" column="company_using" jdbcType="CHAR"/>
-        <!--
-        <collection property="employee" ofType="com.demo.module.employeeManager.Entity.EmployeeInfo">
 
-            <result property="companyCode" column="company_code" jdbcType="CHAR"/>
+
+        <collection property="employeeInfos" ofType="com.demo.module.employeeManager.Entity.EmployeeInfo">
+
+            <result property="companyCode" column="company_code" jdbcType="INTEGER"/>
             <result property="empName" column="emp_name" jdbcType="CHAR"/>
+            <result property="empCode" column="emp_code" jdbcType="INTEGER"/>
             <result property="empTime" column="emp_time" jdbcType="TIMESTAMP"/>
             <result property="empDepartment" column="emp_department" jdbcType="CHAR"/>
             <result property="empType" column="emp_type" jdbcType="CHAR"/>
 
         </collection>
-        -->
+
     </resultMap>
 
     <!--实现一对多查询表Company和employee-->
-    <select id="CompanyAndEmp" parameterType="String" resultMap="BaseResultMap">
-        select * from spdb.company_info where company_code = #{companyCode}
+    <select id="SelectCompanyAndEmp"  parameterType="String" resultMap="BaseResultMap">
+        select * from spdb.company_info
+        inner join spdb.employee_info
+        where spdb.company_info.company_code = #{companyCode} and spdb.employee_info.emp_code ='2827'
     </select>
+
+    <delete id="deleteCompanyAndEmployee" parameterType="String">
+        delete from spdb.company_info where company_code = #{companyCode}
+    </delete>
 </mapper>
