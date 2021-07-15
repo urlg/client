@@ -2,7 +2,6 @@ package com.demo.comm.commonDB;
 
 import com.demo.comm.entity.Common;
 import com.demo.comm.service.CommonService;
-import com.demo.message.ErrorCodeAndMsg;
 import com.demo.message.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

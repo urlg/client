@@ -30,7 +30,6 @@ public class CommonService implements CommonManager {
             }
         return commonManager.getAllCommonInfo();
     }
-
     /**
      * @description 向spdb.commom表中增加一条数据
      * **/

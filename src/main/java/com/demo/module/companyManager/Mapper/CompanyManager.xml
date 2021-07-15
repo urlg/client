@@ -27,10 +27,39 @@
     <select id="SelectCompanyAndEmp"  parameterType="String" resultMap="BaseResultMap">
         select * from spdb.company_info
         inner join spdb.employee_info
-        where spdb.company_info.company_code = #{companyCode} and spdb.employee_info.emp_code ='2827'
+        where spdb.company_info.company_code = #{companyCode} and spdb.employee_info.company_code = #{companyCode}
     </select>
 
+    <!--
+        删除具有主表和从表关系时不能单独删除主表信息,必须删除主表的数据时同时删除从表的信息
+        主表的主键和从表的外键进行关联,用来确保数据一致性.即从表是依赖主表主表没有的信息从表不能有。
+        确保主表的主键和从表的外键必须一致
+        因此:
+            1:主表信息建立时不依赖从表,主表新建时的主键从表可以不具备。
+            2:主表更新信息时主表主键对应的从表外键必须存在,需确保主表主键和从表外键一致性。
+            3:主表删除时如果主表主键只有唯一一个待删除则从表必须与主表关联的所有信息都删除
+            4:从表增加时主表主键必须存在否则不能增加
+            5:从表更新时主表主键必须存在否则不能更新。即从表外键对应的主表主键必须存在。
+            6:从表删除时主表主键必须存在否则不能删除。即从表外键对应的主表主键必须存在。
+    -->
     <delete id="deleteCompanyAndEmployee" parameterType="String">
-        delete from spdb.company_info where company_code = #{companyCode}
+        DELETE spdb.company_info,spdb.employee_info
+            FROM spdb.employee_info LEFT JOIN spdb.company_info
+            ON company_info.company_code = employee_info.company_code
+            WHERE  spdb.employee_info.company_code = #{companyCode}
     </delete>
+
+    <!--
+        @主表 spdb.company_info
+        @从表 spdb.employee_info
+
+        当向主表增加一行数据时不用考虑从表状态  字符集问题需解决
+    -->
+    <insert id="insertCompany" parameterType="com.demo.module.companyManager.Entity.CompanyEntity" >
+        INSERT INTO spdb.company_info
+            SET company_info.company_code = #{companyCode},
+                company_info.company_name = #{companyName},
+                company_info.company_department = default,
+                company_info.company_using = #{companyUsing}
+    </insert>
 </mapper>

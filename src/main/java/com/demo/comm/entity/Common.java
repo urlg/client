@@ -57,8 +57,12 @@ public class Common {
   /**重写equals**/
   @Override
   public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
     Common common = (Common) o;
     return commonCode.equals(common.commonCode) &&
             checkField.equals(common.checkField) &&

@@ -6,7 +6,8 @@ import com.demo.module.employeeManager.Entity.EmployeeInfo;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**公司表**/
+/**公司表
+ * @author 86136**/
 public class CompanyEntity {
 
   private String companyName;

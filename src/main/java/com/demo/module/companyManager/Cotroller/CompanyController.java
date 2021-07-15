@@ -1,6 +1,7 @@
 package com.demo.module.companyManager.Cotroller;
 
 import com.demo.message.Response;
+import com.demo.module.companyManager.Entity.CompanyEntity;
 import com.demo.module.companyManager.Service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,22 @@ public class CompanyController {
     @ResponseBody
     @PostMapping("deleteCompanyAndEmployee")
     public int deleteCompanyAndEmployee(){
-        String code ="10000002";
+        String code ="10000003";
         return companyService.deleteCompanyAndEmployee(code);
+    }
+
+    /**
+     * 向主表内增加一条数据
+     *
+     * **/
+    @ResponseBody
+    @PostMapping("insertCompany")
+    public Response insertCompany(){
+        CompanyEntity companyEntity = new CompanyEntity();
+            companyEntity.setCompanyCode(10000005);
+            companyEntity.setCompanyName("李小龙");
+            companyEntity.setCompanyDepartment("总经理办公室");
+            companyEntity.setCompanyUsing("Y");
+        return new Response(companyService.insertCompany(companyEntity));
     }
 }
