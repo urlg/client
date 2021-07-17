@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!--此Mapper针对的是从表-->
+<mapper namespace="com.demo.module.employeeManager.Mapper.EmployeeMapper">
+
+    <!--@Table  查询单个表 employee表与实体类EmployeeEntity映射-->
+    <resultMap id="BaseResultMap" type="com.demo.module.employeeManager.Entity.EmployeeInfo">
+        <result property="companyCode" column="company_code" jdbcType="INTEGER"/>
+        <result property="empName" column="emp_name" jdbcType="CHAR"/>
+        <result property="empCode" column="emp_code" jdbcType="INTEGER"/>
+        <result property="empTime" column="emp_time" jdbcType="TIMESTAMP"/>
+        <result property="empDepartment" column="emp_department" jdbcType="CHAR"/>
+        <result property="empType" column="emp_type" jdbcType="CHAR"/>
+    </resultMap>
+
+    <!--@Table 多对一查询employee表与实体类EmployeeEntity映射-->
+    <resultMap id="MoreToOneMapping" type="com.demo.module.employeeManager.Entity.EmployeeInfo">
+        <result property="companyCode" column="company_code" jdbcType="INTEGER"/>
+        <result property="empName" column="emp_name" jdbcType="CHAR"/>
+        <result property="empCode" column="emp_code" jdbcType="INTEGER"/>
+        <result property="empDepartment" column="emp_department" jdbcType="CHAR"/>
+        <result property="empTime" column="emp_time" jdbcType="TIMESTAMP"/>
+        <result property="empType" column="emp_type" jdbcType="CHAR"/>
+
+        <association property="companyEntity"  javaType="com.demo.module.companyManager.Entity.CompanyEntity">
+            <result property="companyName" column="company_name" jdbcType="CHAR"/>
+            <result property="companyCode" column="company_code" jdbcType="CHAR"/>
+            <result property="companyDepartment" column="company_department" jdbcType="CHAR"/>
+            <result property="companyUsing" column="company_using" jdbcType="CHAR"/>
+        </association>
+    </resultMap>
+
+
+    <!--根据companyCode查询-->
+    <select id="selectEmployeeByCompanyCode" parameterType="String" resultMap="BaseResultMap">
+        SELECT * FROM SPDB.employee_info WHERE company_code = #{companyCode}
+    </select>
+
+    <!--进行多对一的查询-->
+    <select id="selectMoreToOne" parameterType="string" resultMap="MoreToOneMapping">
+        SELECT spdb.company_info.company_name,company_department, company_using,
+               spdb.employee_info.company_code, emp_name, emp_code, emp_time, emp_department, emp_type
+               FROM spdb.employee_info
+                left  join spdb.company_info
+                ON employee_info.company_code = company_info.company_code
+                WHERE employee_info.company_code = #{companyCode}
+    </select>
+</mapper>

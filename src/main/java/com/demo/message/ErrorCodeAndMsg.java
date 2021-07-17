@@ -14,6 +14,7 @@ public enum ErrorCodeAndMsg {
     IS_NOT_POSTMAPPING("ISN003","此方法无PostMapping注解"),
     IS_NULL_BODY("ISN003","body体不能为空"),
     IS_NOT_ONE("ISN004","数据库插入条数不唯一"),
+    IS_ONE_RECORD("IOR001","数据库插入条数为0"),
     NETWORK_ERROR("999999","网路连接异常"),
 
     /**

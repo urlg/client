@@ -28,4 +28,15 @@ public interface CompanyManager {
     * **/
    public int insertCompany(CompanyEntity companyEntity);
 
+   /**
+    * 更新主表信息时不用考虑从表信息
+    * @description 主表:company_info
+    * @description 从表：employee_info
+    *
+    * @author A-8626  沙建斌
+    * @param companyEntity 表company_info实体类
+    * @return int 更改影响的行数
+    * **/
+   public int updateCompanyInfo(CompanyEntity companyEntity);
+
 }

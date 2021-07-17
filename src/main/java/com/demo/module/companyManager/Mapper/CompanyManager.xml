@@ -8,8 +8,9 @@
         <result property="companyCode" column="company_code" jdbcType="CHAR"/>
         <result property="companyDepartment" column="company_department" jdbcType="CHAR"/>
         <result property="companyUsing" column="company_using" jdbcType="CHAR"/>
+        <result property="totalNumber"  column="Total_Number_com" jdbcType="INTEGER"/>
 
-
+        <!--一对多配置-->
         <collection property="employeeInfos" ofType="com.demo.module.employeeManager.Entity.EmployeeInfo">
 
             <result property="companyCode" column="company_code" jdbcType="INTEGER"/>
@@ -18,6 +19,7 @@
             <result property="empTime" column="emp_time" jdbcType="TIMESTAMP"/>
             <result property="empDepartment" column="emp_department" jdbcType="CHAR"/>
             <result property="empType" column="emp_type" jdbcType="CHAR"/>
+            <result property="totalNumber" column="Total_Number_emp" jdbcType="INTEGER"/>
 
         </collection>
 
@@ -25,9 +27,16 @@
 
     <!--实现一对多查询表Company和employee-->
     <select id="SelectCompanyAndEmp"  parameterType="String" resultMap="BaseResultMap">
-        select * from spdb.company_info
-        inner join spdb.employee_info
-        where spdb.company_info.company_code = #{companyCode} and spdb.employee_info.company_code = #{companyCode}
+        select spdb.company_info.company_name, company_department, company_using,
+               spdb.employee_info.company_code, emp_name, emp_code, emp_time, emp_department, emp_type,
+               (SELECT COUNT(*) FROM spdb.company_info WHERE company_info.company_code = #{companyCode}) AS Total_Number_com,
+               (SELECT COUNT(*) FROM spdb.employee_info WHERE company_code = #{companyCode}) AS Total_Number_emp
+        from spdb.company_info
+        left join spdb.employee_info
+        on spdb.company_info.company_code = #{companyCode}
+
+        where spdb.employee_info.company_code = #{companyCode}
+
     </select>
 
     <!--
@@ -53,7 +62,7 @@
         @主表 spdb.company_info
         @从表 spdb.employee_info
 
-        当向主表增加一行数据时不用考虑从表状态  字符集问题需解决
+        当向主表增加一行数据时不用考虑从表状态  字符集问题需解决 -字符集问题已解决
     -->
     <insert id="insertCompany" parameterType="com.demo.module.companyManager.Entity.CompanyEntity" >
         INSERT INTO spdb.company_info
@@ -62,4 +71,18 @@
                 company_info.company_department = default,
                 company_info.company_using = #{companyUsing}
     </insert>
+
+    <!--
+        @主表 spdb.company_info
+        @从表 spdb.employee_info
+
+        当更新主表时不用考虑从表状态
+    -->
+    <update id="updateCompanyInfo" parameterType="com.demo.module.companyManager.Entity.CompanyEntity" >
+            UPDATE spdb.company_info  AS company
+                SET     company.company_name = #{companyName},
+                        company.company_department = #{companyDepartment},
+                        company.company_using = #{companyUsing}
+                WHERE   company.company_code =#{companyCode}
+    </update>
 </mapper>

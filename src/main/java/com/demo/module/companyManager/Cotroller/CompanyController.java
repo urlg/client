@@ -42,4 +42,16 @@ public class CompanyController {
             companyEntity.setCompanyUsing("Y");
         return new Response(companyService.insertCompany(companyEntity));
     }
+
+    /**
+     * 更新主表内信息
+     *
+     * **/
+    @ResponseBody
+    @PostMapping("updateCompany")
+    public Response updateCompany(){
+        CompanyEntity companyEntity = new CompanyEntity();
+        int record = companyService.updateCompanyInfo(companyEntity);
+        return  new Response(record);
+    }
 }

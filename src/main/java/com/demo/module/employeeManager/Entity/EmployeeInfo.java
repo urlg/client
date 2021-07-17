@@ -1,9 +1,12 @@
 package com.demo.module.employeeManager.Entity;
 
 
+import com.demo.module.companyManager.Entity.CompanyEntity;
+
 import java.util.Objects;
 
-/**员工信息**/
+/**员工信息
+ * @author 86136**/
 public class EmployeeInfo {
 
   private long companyCode;
@@ -12,6 +15,26 @@ public class EmployeeInfo {
   private java.sql.Timestamp empTime;
   private String empDepartment;
   private String empType;
+  private CompanyEntity companyEntity;
+
+
+  public CompanyEntity getCompanyEntity() {
+    return companyEntity;
+  }
+
+  public void setCompanyEntity(CompanyEntity companyEntity) {
+    this.companyEntity = companyEntity;
+  }
+
+  public int getTotalNumber() {
+    return totalNumber;
+  }
+
+  public void setTotalNumber(int totalNumber) {
+    this.totalNumber = totalNumber;
+  }
+
+  private int totalNumber;
 
 
   public long getCompanyCode() {
@@ -74,14 +97,16 @@ public class EmployeeInfo {
     EmployeeInfo that = (EmployeeInfo) o;
     return companyCode == that.companyCode &&
             empCode == that.empCode &&
+            totalNumber == that.totalNumber &&
             empName.equals(that.empName) &&
             empTime.equals(that.empTime) &&
             empDepartment.equals(that.empDepartment) &&
-            empType.equals(that.empType);
+            empType.equals(that.empType) &&
+            companyEntity.equals(that.companyEntity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(companyCode, empName, empCode, empTime, empDepartment, empType);
+    return Objects.hash(companyCode, empName, empCode, empTime, empDepartment, empType, companyEntity, totalNumber);
   }
 }
