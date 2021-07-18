@@ -4,7 +4,7 @@
 <mapper namespace="com.demo.module.employeeManager.Mapper.EmployeeMapper">
 
     <!--@Table  查询单个表 employee表与实体类EmployeeEntity映射-->
-    <resultMap id="BaseResultMap" type="com.demo.module.employeeManager.Entity.EmployeeInfo">
+    <resultMap id="BaseResultMap" type="map" autoMapping="false">
         <result property="companyCode" column="company_code" jdbcType="INTEGER"/>
         <result property="empName" column="emp_name" jdbcType="CHAR"/>
         <result property="empCode" column="emp_code" jdbcType="INTEGER"/>
@@ -13,8 +13,8 @@
         <result property="empType" column="emp_type" jdbcType="CHAR"/>
     </resultMap>
 
-    <!--@Table 多对一查询employee表与实体类EmployeeEntity映射-->
-    <resultMap id="MoreToOneMapping" type="com.demo.module.employeeManager.Entity.EmployeeInfo">
+    <!--@Table 多对一查询employee表与实体类EmployeeEntity映射  说明实体类的对象属性一定会进行映射的。怎么才能不进行映射呢？-->
+    <resultMap id="MoreToOneMapping" type="map">
         <result property="companyCode" column="company_code" jdbcType="INTEGER"/>
         <result property="empName" column="emp_name" jdbcType="CHAR"/>
         <result property="empCode" column="emp_code" jdbcType="INTEGER"/>
@@ -22,7 +22,7 @@
         <result property="empTime" column="emp_time" jdbcType="TIMESTAMP"/>
         <result property="empType" column="emp_type" jdbcType="CHAR"/>
 
-        <association property="companyEntity"  javaType="com.demo.module.companyManager.Entity.CompanyEntity">
+        <association property="companyEntity"  javaType="map">
             <result property="companyName" column="company_name" jdbcType="CHAR"/>
             <result property="companyCode" column="company_code" jdbcType="CHAR"/>
             <result property="companyDepartment" column="company_department" jdbcType="CHAR"/>
@@ -33,7 +33,9 @@
 
     <!--根据companyCode查询-->
     <select id="selectEmployeeByCompanyCode" parameterType="String" resultMap="BaseResultMap">
-        SELECT * FROM SPDB.employee_info WHERE company_code = #{companyCode}
+        SELECT spdb.employee_info.company_code, emp_name, emp_code, emp_time, emp_department, emp_type
+            FROM SPDB.employee_info
+            WHERE company_code = #{companyCode}
     </select>
 
     <!--进行多对一的查询-->
@@ -44,5 +46,71 @@
                 left  join spdb.company_info
                 ON employee_info.company_code = company_info.company_code
                 WHERE employee_info.company_code = #{companyCode}
+    </select>
+
+    <!--
+        定义:resultMap是mybatis将数据库(如：mysql)查询返回数据映射为结果的关键
+        1:id 唯一标识符,<resultMap />内的 id 可以应用到<select />标签的resultMap。
+        如：
+            <select  resultMap="employeeResultMap">
+            即表示此<select />标签执行的结果以此resultMap标签配置进行映射
+        2:type 指定此 <resultMap />标签配置映射后以何种方式返回 ；可以配置 list Entity etc.
+
+    -->
+    <resultMap id="employeeResultMap" type="arraylist">
+
+        <!--
+            id: 此时的id未明白,待深入理解
+            <result />标签:
+                column属性为 <select /> 标签内的字段结果。
+                    <select id="select" resultMap="employeeResultMap">
+                        select spdb.employeeInfo.emp_name,spdb.employeeInfo.emp_code AS code
+                            from employeeInfo = #{emp_code}
+                    </select>
+                  此时result标签就为如下:
+                    <result property="empName" column="emp_name"/>
+                    <result property="empCode" column="code"/>
+
+                    也可以理解为<select> select field1,field2,field3...from table_name</select>
+                    内的 field1,field2,field3...字段名称。
+                       如果<select> select field1,field2,field3 from table_name</select>
+                       结果内无field4字段,但是此时column配置 column="filed4"
+                        即:<result property="filed4Name" column="filed4">
+                        则此时<resultMap type="hashmap">结果内 filed4Name为null。
+                            即如下：
+                                {
+                                    filed4:null
+                                }
+
+                property属性和column属性组合使用。表明将column的字段映射为<resultMap type="hashmap">的key
+                    也可以理解为<result />标签根据<resultMap/> 标签内的type类型构造type类型对应的对象。
+
+                    如果要将表中某一个字段查询返回为list请使用下面结构
+                        <select id="selectArrayList" parameterType="string" resultType="string" >
+                            SELECT emp_name FROM spdb.employee_info
+                                WHERE company_code = #{companyCode}
+                        </select>
+
+                        结果为:
+                            "body": [
+                                    "沙建斌",
+                                    "张晓红",
+                                    ""
+                               ],
+        -->
+<!--        <id property="companyCode" column="company_Code" jdbcType="INTEGER"/>-->
+<!--        <result property="employee_Name" column="emp_name" jdbcType="CHAR" />-->
+            <result  column="count" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--resultMap  type="hashmap"-->
+    <select id="queryEmployee" resultMap="employeeResultMap" parameterType="string">
+        SELECT * FROM spdb.employee_info WHERE company_code = #{company_code}
+    </select>
+
+
+    <select id="selectArrayList" parameterType="string" resultType="string" >
+        SELECT emp_name FROM spdb.employee_info
+                WHERE company_code = #{companyCode}
     </select>
 </mapper>

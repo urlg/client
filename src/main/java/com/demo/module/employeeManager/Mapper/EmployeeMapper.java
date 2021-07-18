@@ -3,6 +3,7 @@ package com.demo.module.employeeManager.Mapper;
 import com.demo.module.employeeManager.Entity.EmployeeInfo;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -25,4 +26,15 @@ public interface EmployeeMapper {
      * @return ArrayList<EmployeeInfo></>
      * **/
     public ArrayList<EmployeeInfo> selectMoreToOne(String companyCode);
+
+    /**
+     *
+     *
+     * **/
+    public ArrayList queryEmployee(String companyCode);
+
+    /**
+     * resultMap type = "arrayList"
+     * **/
+    public ArrayList selectArrayList(String companyCode);
 }

@@ -18,9 +18,6 @@ public class EmployeeService implements EmployeeMapper {
 
     @Autowired
     EmployeeMapper employeeMapper;
-    @Autowired
-    Response response;
-
     /**
      * 根据company_code查询表employee表
      *
@@ -50,4 +47,28 @@ public class EmployeeService implements EmployeeMapper {
         }
         return result;
     }
+
+    /**
+     *
+     **/
+    @Override
+    public ArrayList queryEmployee(String companyCode) {
+        ArrayList result = employeeMapper.queryEmployee(companyCode);
+            if (result.isEmpty()){
+                new GlobalException(ErrorCodeAndMsg.IS_NULL_RECORD);
+            }
+        return result;
+    }
+
+    /**
+     * resultMap type = "arrayList"
+     *
+     * @param companyCode
+     **/
+    @Override
+    public ArrayList selectArrayList(String companyCode) {
+        return employeeMapper.selectArrayList(companyCode);
+    }
+
+
 }

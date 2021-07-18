@@ -42,4 +42,24 @@ public class EmployeeController {
         String employeeCode = "10000001";
         return new Response(employeeService.selectMoreToOne(employeeCode));
     }
+
+    /**
+     * resultMap学习
+     * **/
+    @ResponseBody
+    @PostMapping("queryEmployee")
+    public Response queryEmployee(){
+        String parameter = "10000001";
+        return new Response(employeeService.queryEmployee(parameter));
+    }
+
+    /**
+     * resultMap type = "ArrayList"
+     * **/
+    @ResponseBody
+    @PostMapping("selectArrayList")
+    public Response selectArrayList(){
+        String companyCode = "10000001";
+        return  new Response(employeeService.selectArrayList(companyCode));
+    }
 }
